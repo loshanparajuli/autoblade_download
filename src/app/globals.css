@@ -918,3 +918,249 @@ img {
     width: 100%;
   }
 }
+
+/* ============================================================
+   Pricing page (/pricing)
+   Same flat, square, bordered language as the landing page —
+   no rounded corners, no shadows beyond the shared .dark-cta.
+   The higher tier inverts to --ink so the two cards read as a
+   pair rather than a list.
+   ============================================================ */
+
+/* The one nav link the header carries. Pushed right so the brand pill keeps
+   its left alignment on both pages. */
+.ab-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 22px;
+}
+
+.ab-nav a {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 14px;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.ab-nav a:hover,
+.ab-nav a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.ab-pricing {
+  padding: 53px 24px 72px;
+  border-top: 1px solid var(--line);
+}
+
+/* Equal columns so both cards share a baseline grid regardless of copy
+   length; `align-items: stretch` is what keeps the CTAs bottom-aligned. */
+.ab-plans {
+  display: grid;
+  max-width: 860px;
+  margin: 44px auto 0;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.ab-plan {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 30px 30px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.ab-plan-featured {
+  --line: #2c3a45;
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
+.ab-plan-head {
+  padding-bottom: 26px;
+}
+
+.ab-plan-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  line-height: 15px;
+  text-transform: uppercase;
+}
+
+.ab-plan-featured .ab-plan-name {
+  color: #9aa7b2;
+}
+
+.ab-plan-badge {
+  padding: 3px 8px;
+  border: 1px solid var(--ab-accent);
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: 0.8px;
+  background: var(--ab-accent);
+}
+
+/* Serif numerals to match the display type in .hero-title-block / h2. */
+.ab-plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 0 0 16px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -1.3px;
+  line-height: 1;
+}
+
+.ab-plan-featured .ab-plan-price {
+  color: #fff;
+}
+
+.ab-plan-currency {
+  font-size: 30px;
+}
+
+.ab-plan-amount {
+  font-size: 62px;
+}
+
+.ab-plan-period {
+  margin-left: 4px;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.ab-plan-tagline {
+  margin: 0;
+  max-width: 30ch;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.ab-plan-featured .ab-plan-tagline {
+  color: #9aa7b2;
+}
+
+/* Feature list. Fills the space between the price and the CTA, so `flex: 1`
+   is what keeps both cards' buttons on the same baseline. */
+.ab-plan-features {
+  flex: 1;
+  padding: 24px 0 28px;
+  border-top: 1px solid var(--line);
+}
+
+.ab-plan-features-label {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  line-height: 15px;
+  text-transform: uppercase;
+}
+
+.ab-plan-featured .ab-plan-features-label {
+  color: #9aa7b2;
+}
+
+.ab-plan-features ul {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ab-plan-features li {
+  position: relative;
+  padding-left: 24px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ab-plan-featured .ab-plan-features li {
+  color: #e4e9ed;
+}
+
+/* Checkmark drawn from two borders — no icon font, no SVG request, and it
+   inherits the accent colour on both card backgrounds. */
+.ab-plan-features li::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 3px;
+  width: 5px;
+  height: 9px;
+  border-right: 1.5px solid var(--ab-accent);
+  border-bottom: 1.5px solid var(--ab-accent);
+  transform: rotate(45deg);
+}
+
+.ab-plan-featured .ab-plan-features li::before {
+  border-color: #7fb3dc;
+}
+
+.ab-plan-cta {
+  width: 100%;
+}
+
+.ab-plan-featured .ab-plan-cta {
+  background: #fff;
+  color: var(--ink);
+}
+
+.ab-pricing-note {
+  max-width: 860px;
+  margin: 28px auto 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .ab-nav {
+    gap: 16px;
+  }
+
+  .ab-nav a {
+    font-size: 11px;
+    letter-spacing: 0.8px;
+  }
+
+  .ab-pricing {
+    padding: 48px 24px 56px;
+  }
+
+  .ab-plans {
+    margin-top: 32px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .ab-plan {
+    padding: 28px 24px 26px;
+  }
+
+  .ab-plan-amount {
+    font-size: 54px;
+  }
+}

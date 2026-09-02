@@ -9,6 +9,7 @@ import { SITE_URL } from "./siteConfig";
  */
 const LAST_MODIFIED = {
   home: new Date("2026-08-30"),
+  pricing: new Date("2026-09-03"),
 } as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -18,6 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LAST_MODIFIED.home,
       changeFrequency: "monthly",
       priority: 1,
+    },
+    {
+      url: `${SITE_URL}/pricing`,
+      lastModified: LAST_MODIFIED.pricing,
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
   ];
 }

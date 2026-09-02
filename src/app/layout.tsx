@@ -154,11 +154,17 @@ export default function RootLayout({
     ],
   };
 
+  // Browser extensions inject attributes before React hydrates — Bitdefender
+  // adds `bis_register` / `__processed_*` to <body>, others add markers like
+  // `crxlauncher` to <html>. Left unsuppressed, the mismatch makes React
+  // re-render the tree client-side, which interrupts the in-flight GSAP
+  // reveals and can strand sections at opacity 0.
   return (
-    <html lang="en" className={`${inter.variable} ${instrumentSerif.variable}`}>
-      {/* Browser extensions (e.g. Bitdefender) inject attributes like
-          `bis_register` / `__processed_*` into <body> before React hydrates,
-          which would otherwise trigger a hydration mismatch warning. */}
+    <html
+      lang="en"
+      className={`${inter.variable} ${instrumentSerif.variable}`}
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning>
         <script
           type="application/ld+json"

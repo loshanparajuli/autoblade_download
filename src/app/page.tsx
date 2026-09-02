@@ -1,8 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
-
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SiteFooter } from "./SiteFooter";
+import { AutobladeBetaBanner, AutobladeHeader } from "./AutobladeChrome";
 import { PARENT_SITE_URL, SITE_DESCRIPTION, SITE_URL } from "./siteConfig";
 import { AutobladeAnimations } from "./AutobladeAnimations";
 import { AutobladeDownload } from "./AutobladeDownload";
@@ -20,29 +18,6 @@ export const metadata: Metadata = {
       "An AI-powered multicam podcast app for Mac. It syncs your cameras, transcribes every word, and cuts to whoever is talking.",
   },
 };
-
-function AutobladeBetaBanner() {
-  return (
-    <div className="ab-beta-banner">
-      <p>
-        <strong>Beta test open</strong> · full launch this fall 2026
-      </p>
-    </div>
-  );
-}
-
-/** Brand only — no nav, no CTA. Getting back to fromSilicon is handled by the
-    shared footer. */
-function AutobladeHeader() {
-  return (
-    <header className="ab-header">
-      <Link className="brand-pill ab-brand-pill" href="/">
-        <img src="/autoblade.png" alt="" className="ab-logo" />
-        autoBlade
-      </Link>
-    </header>
-  );
-}
 
 function AutobladeHero() {
   return (
@@ -139,8 +114,9 @@ function AutobladeGet() {
 
 // Describes autoBlade as a product so answer engines can cite concrete facts
 // (platform, requirements, what it does) rather than paraphrasing the hero.
-// No `offers` or `aggregateRating` — pricing isn't set and there are no
-// reviews yet, and inventing either would be a fabricated claim.
+// `offers` is declared on /pricing against this same @id, so the two nodes
+// merge into one product rather than competing. No `aggregateRating` — there
+// are no reviews yet, and inventing one would be a fabricated claim.
 const autobladeJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
