@@ -8,10 +8,11 @@ import { SITE_URL } from "./siteConfig";
  * this by hand when the page's content actually changes.
  */
 const LAST_MODIFIED = {
-  home: new Date("2026-08-30"),
-  pricing: new Date("2026-09-03"),
+  home: new Date("2026-09-03"),
 } as const;
 
+/** One page. Pricing used to be its own route; it's now a section of the home
+    page, so there is nothing else to list. */
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
@@ -19,12 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LAST_MODIFIED.home,
       changeFrequency: "monthly",
       priority: 1,
-    },
-    {
-      url: `${SITE_URL}/pricing`,
-      lastModified: LAST_MODIFIED.pricing,
-      changeFrequency: "monthly",
-      priority: 0.8,
     },
   ];
 }

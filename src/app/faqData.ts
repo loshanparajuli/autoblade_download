@@ -1,5 +1,3 @@
-import { REFUND_DAYS } from "./promo";
-
 /**
  * One source for the FAQ. The accordion renders it and the page turns the same
  * array into FAQPage JSON-LD, so what answer engines quote is exactly what a
@@ -14,7 +12,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "How long does a two-hour episode take?",
-    a: "About two minutes on an Apple silicon Mac, which is where the tagline comes from. Long sessions and slower machines take longer, and rendering the final file is on top of that. Nothing is queued behind anyone else, because nothing leaves your computer.",
+    a: "A two-hour podcast takes under two minutes of your work — dropping the files in and picking your options. The system does the rest on its own while you get on with something else. Nothing is queued behind anyone else, because nothing leaves your computer.",
   },
   {
     q: "Does my footage get uploaded anywhere?",
@@ -29,14 +27,6 @@ export const FAQS: Faq[] = [
     a: "Not yet. Windows is on the roadmap and is the single most requested thing so far, but there is no date to promise yet. Join the beta list and you will hear the moment there is a build worth installing.",
   },
   {
-    q: "What if I do not like it?",
-    a: `Email losh@fromsilicon.com within ${REFUND_DAYS} days of paying and you get your money back, in full, no interrogation. The app is new and this is a fair trade for taking a chance on it.`,
-  },
-  {
-    q: "Do I need an API key?",
-    a: "Not on Pro AI. That plan includes everything — sync, transcription, the multicam cut, captions, blunder detection and highlights — with the AI running on our side. All you need is an active licence key: paste it in once and the app is ready to work. Bringing your own key is an option on Pro if you would rather run the AI features through your own provider.",
-  },
-  {
     q: "Can I fix a cut autoBlade got wrong?",
     a: "Yes. The output is a real edit, not a locked black box, and you can take the render or the transcript into the editor you already use. autoBlade is there to kill the four hours of waveform-matching, not to have the last word on your episode.",
   },
@@ -47,9 +37,5 @@ export const FAQS: Faq[] = [
   {
     q: "It says beta — how finished is it?",
     a: "Finished enough that it edits real episodes end to end today; unfinished enough that you will find rough edges and I will want to hear about them. The full 1.0 lands in fall 2026, and beta testers get every update in between.",
-  },
-  {
-    q: "Know the developer",
-    a: "Losh Parajuli, a software engineer who got tired of spending entire nights matching waveforms for a one-hour conversation and built the tool he wanted instead. He is building autoBlade in public — the post that started it is further up this page. autoBlade ships under fromSilicon.",
   },
 ];

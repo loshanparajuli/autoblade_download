@@ -64,7 +64,7 @@ export function AutobladeDownload() {
           name="email"
           inputMode="email"
           autoComplete="email"
-          placeholder="you@company.com"
+          placeholder="yourname@mail.com"
           aria-label="Email address"
           value={email}
           onChange={(e) => {

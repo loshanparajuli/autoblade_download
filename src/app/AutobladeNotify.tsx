@@ -61,7 +61,7 @@ export function AutobladeNotify() {
           name="email"
           inputMode="email"
           autoComplete="email"
-          placeholder="you@company.com"
+          placeholder="yourname@mail.com"
           aria-label="Email address for Windows availability"
           value={email}
           onChange={(e) => {

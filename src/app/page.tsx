@@ -7,7 +7,9 @@ import { AutobladeCarousel } from "./AutobladeCarousel";
 import { AutobladeLinkedInPost } from "./AutobladeLinkedInPost";
 import { AutobladeFaq } from "./AutobladeFaq";
 import { FAQS } from "./faqData";
-import { PROMO_CODE, PROMO_LABEL, REFUND_DAYS } from "./promo";
+import { AutobladePlanCards } from "./AutobladePlans";
+import { PLANS } from "./plansData";
+import { PROMO_CODE, PROMO_LABEL, PROMO_PLAN, REFUND_DAYS } from "./promo";
 import {
   AutobladeFeatures,
   AutobladeGuarantee,
@@ -57,7 +59,8 @@ function AutobladeHero() {
       <div className="hero-title-block">
         <p className="ab-hero-flag">
           <span className="ab-hero-flag-dot" aria-hidden="true" />
-          Beta is open · code <strong>{PROMO_CODE}</strong> takes {PROMO_LABEL}
+          Beta is open · code <strong>{PROMO_CODE}</strong> takes {PROMO_LABEL}{" "}
+          {PROMO_PLAN}
         </p>
 
         <h1 className="ab-title">
@@ -115,10 +118,9 @@ function AutobladeScreens() {
 
 /* ---------------- walkthrough embed ---------------- */
 
-// Placeholder clip — swap DEMO_VIDEO_ID for the real autoBlade walkthrough
-// upload. youtube-nocookie keeps the embed from setting tracking cookies
-// before anyone presses play.
-const DEMO_VIDEO_ID = "aqz-KE-bpKQ";
+// youtube-nocookie keeps the embed from setting tracking cookies before
+// anyone presses play.
+const DEMO_VIDEO_ID = "sAT4jcrmhXE";
 
 const DEMO_VIDEO_SRC =
   `https://www.youtube-nocookie.com/embed/${DEMO_VIDEO_ID}` +
@@ -159,29 +161,8 @@ function AutobladeStory() {
         <p>The origin</p>
         <h2>How it started</h2>
       </div>
-      <div className="ab-story-body">
-        <p>
-          Last week, I spent an entire night on post for a standard one-on-one
-          podcast. A week later, I was staring down the exact same tedious
-          project. I was so frustrated by the repetition...all I was really doing
-          was comparing audio waveforms and cutting out the dead space. That is a
-          machine&rsquo;s job, not mine.
-        </p>
-        <p>That&rsquo;s when i thought... why not like build a tool that saves me from this nightmare?</p>
-        <p>
-          I looked into existing software, but everything was either too
-          expensive or clearly built by people who had never sat through the
-          work. So, I decided to build my own. I combined my software engineering
-          background with a focus on simple, welcoming design to create something
-          truly built for creators. It has a minimal interface with very few
-          knobs to tweak, but it perfectly automates the boring stuff.
-        </p>
-        <p>
-          That&rsquo;s how we came with an idea for <b>autoBlade</b>, and I am
-          super excited to see what else I can do with it.
-        </p>
-      </div>
-
+      {/* The prose used to retell the post word for word. The post says it
+          better and it is the primary source, so it carries the section alone. */}
       <AutobladeLinkedInPost />
     </section>
   );
@@ -192,9 +173,11 @@ function AutobladeStory() {
 function AutobladeFaqSection() {
   return (
     <section className="ab-faq" id="faq">
+      {/* "Before you download" no longer fits — the download block sits above
+          this now, and the FAQ closes the page. */}
       <div className="section-heading">
         <p>Questions</p>
-        <h2>Before you download</h2>
+        <h2>Good to know</h2>
       </div>
       <AutobladeFaq />
       <p className="ab-faq-foot">
@@ -202,6 +185,30 @@ function AutobladeFaqSection() {
         <a href="mailto:losh@fromsilicon.com">Email me directly</a>{" "}
         &mdash; it
         reaches the person who wrote the app.
+      </p>
+    </section>
+  );
+}
+
+/* ---------------- pricing ---------------- */
+
+/** The only pricing on the site — there is no separate /pricing route, so the
+    nav's Pricing link scrolls here. */
+function AutobladePricingBlock() {
+  return (
+    <section className="ab-pricing ab-pricing-inline" id="pricing">
+      <div className="section-heading">
+        <p>USD · billed monthly</p>
+        <h2>What it costs</h2>
+      </div>
+      <p className="ab-section-lede">
+        Two plans, no seat maths, no per-export fees. {PROMO_PLAN} is{" "}
+        {PROMO_LABEL} during the beta with code <strong>{PROMO_CODE}</strong>{" "}
+        &mdash; Pro AI is full price.
+      </p>
+      <AutobladePlanCards />
+      <p className="ab-pricing-note">
+        Checkout is handled securely by Dodo Payments.
       </p>
     </section>
   );
@@ -219,9 +226,9 @@ function AutobladeGet() {
       <div className="ab-get-inner">
         <p className="ab-get-copy">
           autoBlade is currently in beta. Enter your email for early access
-          &mdash; the full app launches fall 2026. Paid plans are{" "}
-          {PROMO_LABEL} with code <strong>{PROMO_CODE}</strong>, and there is a{" "}
-          {REFUND_DAYS}-day money-back guarantee after that.
+          &mdash; the full app launches fall 2026. {PROMO_PLAN} is{" "}
+          {PROMO_LABEL} with code <strong>{PROMO_CODE}</strong>, and every plan
+          carries a {REFUND_DAYS}-day money-back guarantee.
         </p>
         <AutobladeDownload />
       </div>
@@ -233,9 +240,9 @@ function AutobladeGet() {
 
 // Describes autoBlade as a product so answer engines can cite concrete facts
 // (platform, requirements, what it does) rather than paraphrasing the hero.
-// `offers` is declared on /pricing against this same @id, so the two nodes
-// merge into one product rather than competing. No `aggregateRating` — there
-// are no reviews yet, and inventing one would be a fabricated claim.
+// `offers` used to live on /pricing; with that route gone it moves here, so
+// the prices stay in the structured data. No `aggregateRating` — there are no
+// reviews yet, and inventing one would be a fabricated claim.
 const autobladeJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -257,6 +264,15 @@ const autobladeJsonLd = {
     "Runs entirely on your own machine",
   ],
   publisher: { "@id": `${PARENT_SITE_URL}/#organization` },
+  offers: PLANS.map((plan) => ({
+    "@type": "Offer",
+    name: `autoBlade ${plan.name}`,
+    price: plan.price,
+    priceCurrency: "USD",
+    category: "SubscriptionOffer",
+    url: plan.checkoutUrl,
+    availability: "https://schema.org/InStock",
+  })),
 };
 
 // Mirrors the visible accordion one-for-one — same questions, same answers.
@@ -290,13 +306,14 @@ export default function AutobladePage() {
         <AutobladeMarquee />
         <AutobladeScreens />
         <AutobladeFeatures />
+        <AutobladeGet />
         <AutobladeDemo />
         <AutobladeOffer />
+        <AutobladePricingBlock />
         <AutobladePlatforms />
         <AutobladeStory />
         <AutobladeGuarantee />
         <AutobladeFaqSection />
-        <AutobladeGet />
       </div>
     </main>
   );

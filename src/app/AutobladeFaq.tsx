@@ -9,7 +9,9 @@ import { FAQS } from "./faqData";
  * open state is held in React and the panel is a grid-rows transition.
  */
 export function AutobladeFaq() {
-  const [open, setOpen] = useState<number | null>(0);
+  // Everything starts shut — an answer already open reads as the page having
+  // picked the question for you.
+  const [open, setOpen] = useState<number | null>(null);
 
   return (
     <div className="ab-faq-list">

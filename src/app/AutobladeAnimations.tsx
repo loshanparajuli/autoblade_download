@@ -90,18 +90,6 @@ export function AutobladeAnimations() {
 
       revealHeading(".ab-story");
 
-      gsap.from(".ab-story-body p", {
-        autoAlpha: 0,
-        y: 26,
-        stagger: 0.1,
-        duration: 0.72,
-        scrollTrigger: {
-          trigger: ".ab-story-body",
-          start: "top 82%",
-          once: true,
-        },
-      });
-
       reveal(".ab-li", ".ab-li");
 
       gsap.from(".ab-guarantee-seal, .ab-guarantee-copy", {
@@ -117,24 +105,56 @@ export function AutobladeAnimations() {
         },
       });
 
-      revealHeading(".ab-faq");
+      // The FAQ closes the page now, so like the download block it uses
+      // "top bottom": a start further down the viewport can sit below the
+      // furthest the page will ever scroll and simply never fire.
+      gsap.from(".ab-faq .section-heading > *", {
+        autoAlpha: 0,
+        y: 34,
+        stagger: 0.11,
+        duration: 0.82,
+        ease: editorialEase,
+        scrollTrigger: { trigger: ".ab-faq", start: "top bottom", once: true },
+      });
 
       gsap.from(".ab-faq-item", {
         autoAlpha: 0,
         y: 18,
         stagger: 0.05,
         duration: 0.6,
-        scrollTrigger: { trigger: ".ab-faq-list", start: "top 86%", once: true },
+        scrollTrigger: { trigger: ".ab-faq", start: "top bottom", once: true },
       });
 
-      revealHeading(".ab-get");
+      gsap.from(".ab-faq-foot", {
+        autoAlpha: 0,
+        y: 20,
+        duration: 0.6,
+        scrollTrigger: { trigger: ".ab-faq", start: "top bottom", once: true },
+      });
+
+      // The download block is the last thing on the page, so a start like
+      // "top 82%" can sit below the furthest the page will ever scroll — the
+      // trigger never fires and the form stays invisible. "top bottom" fires
+      // the moment the section edge enters the viewport, which always happens.
+      gsap.from(".ab-get .section-heading > *", {
+        autoAlpha: 0,
+        y: 34,
+        stagger: 0.11,
+        duration: 0.82,
+        ease: editorialEase,
+        scrollTrigger: {
+          trigger: ".ab-get",
+          start: "top bottom",
+          once: true,
+        },
+      });
 
       gsap.from(".ab-get-inner > *", {
         autoAlpha: 0,
         y: 28,
         stagger: 0.11,
         duration: 0.72,
-        scrollTrigger: { trigger: ".ab-get-inner", start: "top 82%", once: true },
+        scrollTrigger: { trigger: ".ab-get", start: "top bottom", once: true },
       });
     });
 
