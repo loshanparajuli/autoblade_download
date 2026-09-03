@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SiteFooter } from "../SiteFooter";
 import { AutobladeBetaBanner, AutobladeHeader } from "../AutobladeChrome";
 import { PARENT_SITE_URL, SITE_URL } from "../siteConfig";
 import { PricingAnimations } from "./PricingAnimations";
+import { CouponChip } from "../AutobladeCoupon";
+import { AutobladeGuarantee } from "../AutobladeSections";
+import { CHECKOUT_HINT, PROMO_CODE, PROMO_LABEL, REFUND_DAYS } from "../promo";
 
 const PAGE_DESCRIPTION =
-  "autoBlade pricing. Pro is $11.99 a month for 40 podcasts, no watermark and your own API key. Pro AI is $19.99 a month and adds blunder detection and highlights sequences.";
+  `autoBlade pricing. Pro is $11.99 a month for 40 podcasts, no watermark and your own API key. Pro AI is $19.99 a month and adds blunder detection and highlights sequences. Beta code ${PROMO_CODE} takes ${PROMO_LABEL} at checkout.`;
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -85,6 +89,7 @@ function PricingHero() {
         <p className="ab-lede">
           Two plans, no seat maths, no per-export fees. Pick Pro for the full
           editor, or Pro AI to hand the tedious calls to autoBlade as well.
+          During the beta, both are free with a code.
         </p>
       </div>
     </section>
@@ -132,15 +137,39 @@ function PricingPlans() {
         <p>USD · billed monthly</p>
         <h2>Choose a plan</h2>
       </div>
+      <div className="ab-promo-strip">
+        <div className="ab-promo-copy">
+          <p className="ab-promo-eyebrow">Beta offer · limited window</p>
+          <p className="ab-promo-headline">
+            Take <strong>{PROMO_LABEL}</strong> either plan
+          </p>
+          <p className="ab-promo-hint">{CHECKOUT_HINT}</p>
+        </div>
+        <CouponChip tone="light" />
+      </div>
+
       <div className="ab-plans">
         {PLANS.map((plan) => (
           <PlanCard key={plan.id} plan={plan} />
         ))}
       </div>
       <p className="ab-pricing-note">
-        Prices are in US dollars, billed monthly. Checkout is handled securely
-        by Dodo Payments.
+        Prices are in US dollars, billed monthly, and cancellable from your
+        account at any time. Checkout is handled securely by Dodo Payments
+        &mdash; the discount field is on the payment page, so keep{" "}
+        <strong>{PROMO_CODE}</strong> handy. Every plan is covered by the{" "}
+        {REFUND_DAYS}-day money-back guarantee below.
       </p>
+
+      <div className="ab-pricing-soon">
+        <span className="ab-platform-status">Coming soon</span>
+        <p>
+          <strong>Windows.</strong>{" "}
+          autoBlade is Apple silicon only today. A
+          Windows build is in progress with no date to promise yet &mdash;{" "}
+          <Link href="/#download">join the beta list</Link> and you will hear first.
+        </p>
+      </div>
     </section>
   );
 }
@@ -180,6 +209,14 @@ export default function PricingPage() {
         <AutobladeHeader current="pricing" />
         <PricingHero />
         <PricingPlans />
+        <AutobladeGuarantee />
+        <section className="ab-pricing-faq">
+          <p>
+            Questions about limits, refunds or what runs on-device?{" "}
+            <Link href="/#faq">Read the FAQ</Link> or{" "}
+            <a href="mailto:losh@fromsilicon.com">email me directly</a>.
+          </p>
+        </section>
         <SiteFooter />
       </div>
     </main>

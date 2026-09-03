@@ -35,6 +35,18 @@ export function PricingAnimations() {
         },
       });
 
+      gsap.from(".ab-promo-strip", {
+        autoAlpha: 0,
+        y: 34,
+        duration: 0.8,
+        ease: editorialEase,
+        scrollTrigger: {
+          trigger: ".ab-promo-strip",
+          start: "top 88%",
+          once: true,
+        },
+      });
+
       gsap.from(".ab-plan", {
         autoAlpha: 0,
         y: 90,
@@ -45,13 +57,27 @@ export function PricingAnimations() {
         scrollTrigger: { trigger: ".ab-plans", start: "top 82%", once: true },
       });
 
-      gsap.from(".ab-pricing-note", {
+      gsap.from(".ab-pricing-note, .ab-pricing-soon", {
         autoAlpha: 0,
         y: 26,
+        stagger: 0.1,
         duration: 0.72,
         scrollTrigger: {
           trigger: ".ab-pricing-note",
           start: "top 92%",
+          once: true,
+        },
+      });
+
+      gsap.from(".ab-guarantee-seal, .ab-guarantee-copy", {
+        autoAlpha: 0,
+        y: 34,
+        stagger: 0.12,
+        duration: 0.85,
+        ease: editorialEase,
+        scrollTrigger: {
+          trigger: ".ab-guarantee",
+          start: "top 84%",
           once: true,
         },
       });
