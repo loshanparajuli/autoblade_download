@@ -20,15 +20,10 @@ export function AutobladeAnimations() {
     const ctx = gsap.context(() => {
       gsap.defaults({ ease: revealEase, overwrite: "auto" });
 
-      // The hero above the fold renders untouched — no blank flash on load —
-      // but the pieces below the headline still come in on their own beat.
-      gsap.from(".ab-hero-stats > div", {
-        autoAlpha: 0,
-        y: 20,
-        stagger: 0.09,
-        duration: 0.7,
-        delay: 0.25,
-      });
+      // The hero renders untouched on load, matching the home page. Nothing
+      // above the fold is hidden behind a tween: GSAP runs on rAF, which is
+      // suspended in a background tab, so an opening reveal there would leave
+      // the first screen blank until the tab is focused.
 
       revealHeading(".ab-screens");
       reveal(".ab-screens .ab-section-lede", ".ab-screens .ab-section-lede");
@@ -107,7 +102,7 @@ export function AutobladeAnimations() {
         },
       });
 
-      reveal(".ab-founder", ".ab-founder");
+      reveal(".ab-li", ".ab-li");
 
       gsap.from(".ab-guarantee-seal, .ab-guarantee-copy", {
         autoAlpha: 0,
@@ -140,14 +135,6 @@ export function AutobladeAnimations() {
         stagger: 0.11,
         duration: 0.72,
         scrollTrigger: { trigger: ".ab-get-inner", start: "top 82%", once: true },
-      });
-
-      gsap.from(".site-footer .footer-brand > *, .site-footer .footer-bottom > *", {
-        autoAlpha: 0,
-        y: 26,
-        stagger: 0.08,
-        duration: 0.72,
-        scrollTrigger: { trigger: ".site-footer", start: "top 82%", once: true },
       });
     });
 

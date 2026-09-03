@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CouponChip } from "./AutobladeCoupon";
+import { AutobladeNotify } from "./AutobladeNotify";
 import { PROMO_CODE, PROMO_LABEL, REFUND_DAYS } from "./promo";
 
 /* Icons are inline, stroke-only and 24×24 on a shared grid, so the feature
@@ -68,7 +69,7 @@ const FEATURES = [
   {
     icon: icon.sync,
     title: "Sync that just happens",
-    copy: "Three cameras, three start times, three lengths. autoBlade reads the audio and puts them all on one clock — no clapperboard, no timecode box, no dragging.",
+    copy: "Three cameras or more, all with different start times and lengths. autoBlade reads the audio and puts them on one clock — no clapperboard, no timecode box, no dragging.",
   },
   {
     icon: icon.cut,
@@ -192,12 +193,10 @@ export function AutobladePlatforms() {
           <h3>Windows</h3>
           <p>
             In progress and the most-asked-for thing on the list. No date to
-            promise yet &mdash; the beta list gets it first, the day there is a
-            build worth installing.
+            promise yet &mdash; leave your email and you will hear the day
+            there is a build worth installing.
           </p>
-          <a className="ab-platform-cta ab-ghost-cta" href="#download">
-            Get notified
-          </a>
+          <AutobladeNotify />
         </article>
       </div>
     </section>
@@ -228,7 +227,7 @@ export function AutobladeOffer() {
         <ul className="ab-offer-points">
           <li>No card charged while the code is live</li>
           <li>{REFUND_DAYS}-day money-back guarantee after that</li>
-          <li>Cancel from your account whenever you want</li>
+          <li>Cancel whenever you want</li>
         </ul>
       </div>
     </section>

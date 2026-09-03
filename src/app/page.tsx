@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "./SiteFooter";
 import { AutobladeBetaBanner, AutobladeHeader } from "./AutobladeChrome";
 import { PARENT_SITE_URL, SITE_DESCRIPTION, SITE_URL } from "./siteConfig";
 import { AutobladeAnimations } from "./AutobladeAnimations";
 import { AutobladeDownload } from "./AutobladeDownload";
 import { AutobladeCarousel } from "./AutobladeCarousel";
+import { AutobladeLinkedInPost } from "./AutobladeLinkedInPost";
 import { AutobladeFaq } from "./AutobladeFaq";
 import { FAQS } from "./faqData";
 import { PROMO_CODE, PROMO_LABEL, REFUND_DAYS } from "./promo";
@@ -15,8 +15,6 @@ import {
   AutobladeOffer,
   AutobladePlatforms,
 } from "./AutobladeSections";
-
-const LINKEDIN_URL = "https://www.linkedin.com/in/loshanparajuli/";
 
 export const metadata: Metadata = {
   // Absolute so the root layout's `%s | autoBlade` template doesn't append.
@@ -36,7 +34,7 @@ export const metadata: Metadata = {
 
 const HERO_STATS = [
   { value: "~2 min", label: "to edit a 2-hour episode" },
-  { value: "3 cams", label: "synced from audio alone" },
+  { value: "3+ cameras", label: "synced from audio alone" },
   { value: "0 bytes", label: "uploaded off your Mac" },
 ];
 
@@ -117,23 +115,35 @@ function AutobladeScreens() {
 
 /* ---------------- walkthrough embed ---------------- */
 
+// Placeholder clip — swap DEMO_VIDEO_ID for the real autoBlade walkthrough
+// upload. youtube-nocookie keeps the embed from setting tracking cookies
+// before anyone presses play.
+const DEMO_VIDEO_ID = "aqz-KE-bpKQ";
+
+const DEMO_VIDEO_SRC =
+  `https://www.youtube-nocookie.com/embed/${DEMO_VIDEO_ID}` +
+  `?autoplay=1&mute=1&loop=1&playlist=${DEMO_VIDEO_ID}` +
+  "&controls=1&rel=0&playsinline=1&modestbranding=1";
+
 function AutobladeDemo() {
   return (
     <section className="ab-demo" aria-label="autoBlade walkthrough">
       <div className="section-heading">
-        <p>Try it here</p>
+        <p>Watch it run</p>
         <h2>The walkthrough</h2>
       </div>
       <p className="ab-section-lede">
-        This is the same five-step onboarding you get on first launch. Click
-        through it right here &mdash; arrow keys work too.
+        Three cameras in, one finished episode out. The whole thing, start to
+        finish, with nothing sped up that matters.
       </p>
       <div className="ab-demo-frame">
         <iframe
           className="ab-demo-embed"
-          src="/autoblade-wizard.html"
-          title="autoBlade interactive walkthrough"
+          src={DEMO_VIDEO_SRC}
+          title="autoBlade walkthrough video"
           loading="lazy"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
         />
       </div>
     </section>
@@ -172,29 +182,7 @@ function AutobladeStory() {
         </p>
       </div>
 
-      <div className="ab-founder">
-        <div className="ab-founder-mark" aria-hidden="true">
-          LP
-        </div>
-        <div className="ab-founder-copy">
-          <p className="ab-founder-name">Losh Parajuli</p>
-          <p className="ab-founder-role">
-            Founder &amp; engineer, fromSilicon &mdash; building autoBlade in the
-            open
-          </p>
-        </div>
-        <a
-          className="ab-linkedin-cta"
-          href={LINKEDIN_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6.5 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.45-2.2 2.96V21h-4V9Z" />
-          </svg>
-          Follow the founder&rsquo;s story
-        </a>
-      </div>
+      <AutobladeLinkedInPost />
     </section>
   );
 }
@@ -309,7 +297,6 @@ export default function AutobladePage() {
         <AutobladeGuarantee />
         <AutobladeFaqSection />
         <AutobladeGet />
-        <SiteFooter />
       </div>
     </main>
   );

@@ -13,7 +13,7 @@ export const PROMO_CODE = "BETA100";
 export const PROMO_LABEL = "100% off";
 
 /** How long the money-back guarantee runs, in days. */
-export const REFUND_DAYS = 14;
+export const REFUND_DAYS = 7;
 
 /**
  * Dodo's hosted checkout does not pre-apply a code from the URL — it renders a
