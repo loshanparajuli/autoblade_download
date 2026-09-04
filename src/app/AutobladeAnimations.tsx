@@ -64,6 +64,22 @@ export function AutobladeAnimations() {
         scrollTrigger: { trigger: ".ab-demo", start: "top 78%", once: true },
       });
 
+      // The plan cards had their reveal in the old /pricing page's animation
+      // file, which went with that route — without this the pricing block is
+      // the one section on the page that never moves.
+      revealHeading(".ab-pricing");
+      reveal(".ab-pricing .ab-section-lede", ".ab-pricing .ab-section-lede");
+
+      gsap.from(".ab-plan", {
+        autoAlpha: 0,
+        y: 60,
+        scale: 0.985,
+        stagger: 0.12,
+        duration: 0.95,
+        ease: editorialEase,
+        scrollTrigger: { trigger: ".ab-plans", start: "top 84%", once: true },
+      });
+
       gsap.from(".ab-offer-card", {
         autoAlpha: 0,
         y: 60,
@@ -91,19 +107,6 @@ export function AutobladeAnimations() {
       revealHeading(".ab-story");
 
       reveal(".ab-li", ".ab-li");
-
-      gsap.from(".ab-guarantee-seal, .ab-guarantee-copy", {
-        autoAlpha: 0,
-        y: 34,
-        stagger: 0.12,
-        duration: 0.85,
-        ease: editorialEase,
-        scrollTrigger: {
-          trigger: ".ab-guarantee",
-          start: "top 84%",
-          once: true,
-        },
-      });
 
       // The FAQ closes the page now, so like the download block it uses
       // "top bottom": a start further down the viewport can sit below the
@@ -156,6 +159,23 @@ export function AutobladeAnimations() {
         duration: 0.72,
         scrollTrigger: { trigger: ".ab-get", start: "top bottom", once: true },
       });
+
+      // The footer closes the page, so it takes the same "top bottom" start —
+      // anything further down can sit below the maximum scroll and never fire.
+      gsap.from(
+        ".site-footer .footer-brand > *, .site-footer .footer-bottom > *",
+        {
+          autoAlpha: 0,
+          y: 26,
+          stagger: 0.08,
+          duration: 0.72,
+          scrollTrigger: {
+            trigger: ".site-footer",
+            start: "top bottom",
+            once: true,
+          },
+        }
+      );
     });
 
     const refresh = () => ScrollTrigger.refresh();

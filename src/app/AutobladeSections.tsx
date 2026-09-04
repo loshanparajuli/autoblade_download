@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { CouponChip } from "./AutobladeCoupon";
+import { FEATURES } from "./featuresData";
 import { AutobladeNotify } from "./AutobladeNotify";
+import { PROMO_PLAN_DATA } from "./plansData";
 import { PROMO_CODE, PROMO_LABEL, PROMO_PLAN, REFUND_DAYS } from "./promo";
 
 /* Icons are inline, stroke-only and 24×24 on a shared grid, so the feature
@@ -63,38 +64,6 @@ function Icon({ children }: { children: React.ReactNode }) {
   );
 }
 
-const FEATURES = [
-  {
-    icon: icon.sync,
-    title: "Sync that just happens",
-    copy: "Three cameras or more, all with different start times and lengths. autoBlade reads the audio and puts them on one clock — no clapperboard, no timecode box, no dragging.",
-  },
-  {
-    icon: icon.cut,
-    title: "It cuts to whoever's talking",
-    copy: "Speaker detection drives the switch, frame by frame. When you both jump in, it goes wide, then comes back. That's the four boring hours, gone.",
-  },
-  {
-    icon: icon.wave,
-    title: "Every word, transcribed",
-    copy: "A full transcript of the session comes out the other side, timed to the edit. Search it, quote it, ship it as subtitles.",
-  },
-  {
-    icon: icon.chip,
-    title: "On-device, on Apple silicon",
-    copy: "Built for the Neural Engine. A two-hour episode turns around in about two minutes, with no upload bar and no render queue you're waiting behind.",
-  },
-  {
-    icon: icon.shield,
-    title: "Your footage never leaves",
-    copy: "No cloud step. No account required to edit. Unreleased interviews and NDA'd guests stay on the drive they were recorded to.",
-  },
-  {
-    icon: icon.vertical,
-    title: "Shorts, from the same cut",
-    copy: "The same engine reframes to 9:16 and follows the speaker vertically. Burn in captions, drag, scale, restyle — then export the set.",
-  },
-];
 
 export function AutobladeFeatures() {
   return (
@@ -111,7 +80,7 @@ export function AutobladeFeatures() {
       <div className="ab-feature-grid">
         {FEATURES.map((feature) => (
           <article className="ab-feature" key={feature.title}>
-            <Icon>{feature.icon}</Icon>
+            <Icon>{icon[feature.id]}</Icon>
             <h3>{feature.title}</h3>
             <p>{feature.copy}</p>
           </article>
@@ -230,9 +199,12 @@ export function AutobladeOffer() {
         </p>
         <div className="ab-offer-actions">
           <CouponChip tone="dark" />
-          <Link className="ab-offer-cta" href="#pricing">
-            See the plans
-          </Link>
+          {/* Straight to the Pro checkout — the plan cards sit directly above
+              this card, so a link back to them would just send people up the
+              page they have already read. External origin, so a plain <a>. */}
+          <a className="ab-offer-cta" href={PROMO_PLAN_DATA.checkoutUrl}>
+            Get {PROMO_PLAN} &mdash; {PROMO_LABEL}
+          </a>
         </div>
         <ul className="ab-offer-points">
           <li>Nothing to pay on {PROMO_PLAN} while the code is live</li>
@@ -244,24 +216,3 @@ export function AutobladeOffer() {
   );
 }
 
-export function AutobladeGuarantee() {
-  return (
-    <section className="ab-guarantee">
-      <div className="ab-guarantee-inner">
-        <div className="ab-guarantee-seal" aria-hidden="true">
-          <span className="ab-guarantee-days">{REFUND_DAYS}</span>
-          <span className="ab-guarantee-unit">days</span>
-        </div>
-        <div className="ab-guarantee-copy">
-          <h2>A {REFUND_DAYS}-day money-back guarantee</h2>
-          <p>
-            Not for you? Email{" "}
-            <a href="mailto:losh@fromsilicon.com">losh@fromsilicon.com</a>{" "}
-            within {REFUND_DAYS}{" "}
-            days for a full refund. No form, no retention script.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}

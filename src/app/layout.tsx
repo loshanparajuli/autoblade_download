@@ -2,11 +2,14 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import {
+  CONTACT_EMAIL,
   PARENT_SITE_NAME,
   PARENT_SITE_URL,
   SITE_DESCRIPTION,
+  SITE_DESCRIPTION_LONG,
   SITE_NAME,
-  SITE_TAGLINE,
+  SITE_SUMMARY,
+  SITE_TITLE,
   SITE_URL,
 } from "./siteConfig";
 
@@ -36,27 +39,41 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    default: SITE_TITLE,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
+  // Keywords are not a ranking signal for Google, but they are read by
+  // several answer engines and site-search tools, so the list mirrors the
+  // phrases the page actually earns rather than padding out a wish list.
   keywords: [
     "autoBlade",
-    "multicam podcast editing",
-    "AI podcast editor for Mac",
+    "multicam podcast editor",
+    "AI podcast editing software",
     "automatic multicam sync",
+    "podcast editor for Mac",
     "on-device transcription",
+    "automatic speaker detection",
     "podcast post-production automation",
-    "Apple silicon podcast app",
+    "Apple silicon video editor",
+    "vertical shorts from podcast",
     "fromSilicon",
   ],
-  authors: [{ name: "Losh", url: "mailto:losh@fromsilicon.com" }],
-  creator: "Losh (losh@fromsilicon.com)",
+  authors: [{ name: "Losh Parajuli", url: PARENT_SITE_URL }],
+  creator: "Losh Parajuli",
   publisher: PARENT_SITE_NAME,
   category: "Multimedia Software",
   alternates: {
     canonical: "/",
+    // Standards-based discovery for /llms.txt. An LLM or agent that fetches
+    // the page can follow this instead of guessing the path, and it costs a
+    // single <link> rather than a non-standard robots.txt directive.
+    types: {
+      "text/plain": [
+        { url: "/llms.txt", title: `${SITE_NAME} — plain-text summary for LLMs` },
+      ],
+    },
   },
   icons: {
     icon: [
@@ -72,14 +89,16 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
-    description: SITE_DESCRIPTION,
+    title: SITE_TITLE,
+    // Social cards have more room than a SERP snippet, so they get the
+    // longer copy rather than the truncated-for-Google one.
+    description: SITE_DESCRIPTION_LONG,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
-    description: SITE_DESCRIPTION,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION_LONG,
     site: "@fromsf",
     creator: "@fromsf",
   },
@@ -119,7 +138,7 @@ export default function RootLayout({
           width: 512,
           height: 512,
         },
-        email: "losh@fromsilicon.com",
+        email: CONTACT_EMAIL,
         founder: { "@id": `${PARENT_SITE_URL}/#losh` },
         sameAs: [
           "https://x.com/fromsf",
@@ -132,9 +151,9 @@ export default function RootLayout({
         "@id": `${PARENT_SITE_URL}/#losh`,
         name: "Losh Parajuli",
         alternateName: "Losh",
-        url: "https://www.linkedin.com/in/loshanparajuli/",
-        email: "losh@fromsilicon.com",
-        jobTitle: "Founder",
+        url: "https://www.linkedin.com/fromsilicon/",
+        email: CONTACT_EMAIL,
+        jobTitle: "founder",
         worksFor: { "@id": `${PARENT_SITE_URL}/#organization` },
         sameAs: [
           "https://x.com/fromsf",
@@ -147,7 +166,9 @@ export default function RootLayout({
         "@id": `${SITE_URL}/#website`,
         url: SITE_URL,
         name: SITE_NAME,
-        description: SITE_DESCRIPTION,
+        // The plain-language "what is this" sentence, so an answer engine
+        // that quotes the site node quotes something self-contained.
+        description: SITE_SUMMARY,
         publisher: { "@id": `${PARENT_SITE_URL}/#organization` },
         inLanguage: "en",
       },

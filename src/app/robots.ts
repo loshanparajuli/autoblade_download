@@ -21,6 +21,11 @@ const ANSWER_ENGINE_BOTS = [
   "Applebot-Extended",
   "DuckAssistBot",
   "meta-externalagent",
+  "Amazonbot", // Alexa / Rufus answers
+  "Applebot", // Siri and Spotlight suggestions
+  "YouBot", // You.com
+  "MistralAI-User",
+  "cohere-ai",
   "CCBot", // Common Crawl — feeds many downstream models
 ];
 

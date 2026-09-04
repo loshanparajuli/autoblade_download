@@ -17,52 +17,19 @@ export function SiteFooter() {
           Distribution for VCs and founders. We turn how you think into content
           the right people actually see.
         </p>
-        <nav className="footer-links" aria-label="External links">
-          <a href={PARENT_SITE_URL}>fromSilicon</a>
-          <a
-            href="https://substack.com/@fromsilicon"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Blogs
-          </a>
-          <a
-            href="https://fromsilicon.notion.site/Onboarding/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Onboarding
-          </a>
-          <a
-            className="footer-hiring"
-            href="https://fromsilicon.notion.site/we-are-hiring"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            We are hiring
-          </a>
-        </nav>
       </div>
       <div className="footer-bottom">
         <a href="mailto:losh@fromsilicon.com">
           <img src={asset("desktop-icon-18.svg")} alt="" />
           losh@fromsilicon.com
         </a>
-        <span>© 2026 fromSilicon • All rights reserved</span>
+        <span>© 2026, Powered by fromSilicon</span>
         <div>
-          <a
-            href="https://www.linkedin.com/in/loshanparajuli/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-          >
-            <img src={asset("icons8-linkedin.svg")} alt="" />
-          </a>
           <a
             href="https://x.com/@fromsf"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="X"
+            aria-label="fromSilicon on X"
           >
             <img src={asset("twitter-x.svg")} alt="" />
           </a>

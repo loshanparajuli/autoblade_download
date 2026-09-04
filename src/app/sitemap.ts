@@ -8,7 +8,7 @@ import { SITE_URL } from "./siteConfig";
  * this by hand when the page's content actually changes.
  */
 const LAST_MODIFIED = {
-  home: new Date("2026-09-03"),
+  home: new Date("2026-09-04"),
 } as const;
 
 /** One page. Pricing used to be its own route; it's now a section of the home

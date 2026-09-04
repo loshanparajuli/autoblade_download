@@ -1,6 +1,11 @@
-import type { Metadata } from "next";
 import { AutobladeBetaBanner, AutobladeHeader } from "./AutobladeChrome";
-import { PARENT_SITE_URL, SITE_DESCRIPTION, SITE_URL } from "./siteConfig";
+import { SiteFooter } from "./SiteFooter";
+import {
+  PARENT_SITE_URL,
+  REQUIREMENTS,
+  SITE_SUMMARY,
+  SITE_URL,
+} from "./siteConfig";
 import { AutobladeAnimations } from "./AutobladeAnimations";
 import { AutobladeDownload } from "./AutobladeDownload";
 import { AutobladeCarousel } from "./AutobladeCarousel";
@@ -12,25 +17,18 @@ import { PLANS } from "./plansData";
 import { PROMO_CODE, PROMO_LABEL, PROMO_PLAN, REFUND_DAYS } from "./promo";
 import {
   AutobladeFeatures,
-  AutobladeGuarantee,
   AutobladeMarquee,
   AutobladeOffer,
   AutobladePlatforms,
 } from "./AutobladeSections";
 
-export const metadata: Metadata = {
-  // Absolute so the root layout's `%s | autoBlade` template doesn't append.
-  title: { absolute: "autoBlade | 2 minute for 2hr podcast" },
-  description: SITE_DESCRIPTION,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    url: SITE_URL,
-    title: "autoBlade | 2 minute for 2hr podcast",
-    description:
-      "An AI-powered multicam podcast app for Mac. It syncs your cameras, transcribes every word, and cuts to whoever is talking.",
-  },
-};
+// No `metadata` export here on purpose. This route used to restate the title,
+// description, canonical and Open Graph block that the root layout already
+// sets, and page-level metadata *replaces* the layout's field rather than
+// merging into it — so the duplicate `alternates` silently dropped the
+// <link rel="alternate"> pointing at /llms.txt. The layout's `title.default`
+// is used verbatim for a route that sets no title of its own, so inheriting
+// gives the identical head with one place to change it.
 
 /* ---------------- hero ---------------- */
 
@@ -80,7 +78,7 @@ function AutobladeHero() {
           <a className="dark-cta ab-hero-cta" href="#download">
             Download for Mac
           </a>
-          <a className="ab-ghost-cta" href="#features">
+          <a className="ab-ghost-cta" href="#walkthrough">
             See how it works
           </a>
         </div>
@@ -129,7 +127,7 @@ const DEMO_VIDEO_SRC =
 
 function AutobladeDemo() {
   return (
-    <section className="ab-demo" aria-label="autoBlade walkthrough">
+    <section className="ab-demo" id="walkthrough" aria-label="autoBlade walkthrough">
       <div className="section-heading">
         <p>Watch it run</p>
         <h2>The walkthrough</h2>
@@ -173,11 +171,9 @@ function AutobladeStory() {
 function AutobladeFaqSection() {
   return (
     <section className="ab-faq" id="faq">
-      {/* "Before you download" no longer fits — the download block sits above
-          this now, and the FAQ closes the page. */}
       <div className="section-heading">
         <p>Questions</p>
-        <h2>Good to know</h2>
+        <h2>frequently asked</h2>
       </div>
       <AutobladeFaq />
       <p className="ab-faq-foot">
@@ -263,7 +259,13 @@ const autobladeJsonLd = {
     "No manual setup or alignment required",
     "Runs entirely on your own machine",
   ],
+  softwareRequirements: REQUIREMENTS,
+  screenshot: `${SITE_URL}/autoblade.png`,
+  inLanguage: "en",
   publisher: { "@id": `${PARENT_SITE_URL}/#organization` },
+  // Points at the VideoObject below rather than repeating it, so the demo is
+  // attached to the product instead of floating as an unrelated node.
+  video: { "@id": `${SITE_URL}/#walkthrough-video` },
   offers: PLANS.map((plan) => ({
     "@type": "Offer",
     name: `autoBlade ${plan.name}`,
@@ -272,7 +274,72 @@ const autobladeJsonLd = {
     category: "SubscriptionOffer",
     url: plan.checkoutUrl,
     availability: "https://schema.org/InStock",
+    seller: { "@id": `${PARENT_SITE_URL}/#organization` },
   })),
+};
+
+// The walkthrough is the strongest proof on the page, and video results are a
+// surface of their own. Date and runtime are the real values from the upload,
+// not estimates — a wrong uploadDate is the usual reason this markup gets
+// ignored.
+const videoJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "@id": `${SITE_URL}/#walkthrough-video`,
+  name: "autoBlade walkthrough — three cameras in, one finished episode out",
+  description:
+    "A full walkthrough of autoBlade editing a multicam podcast: importing the host, guest and wide cameras, syncing them from audio, transcribing the session, and cutting automatically to whoever is speaking.",
+  thumbnailUrl: `https://i.ytimg.com/vi/${DEMO_VIDEO_ID}/maxresdefault.jpg`,
+  uploadDate: "2026-08-31T21:07:28-07:00",
+  duration: "PT57M4S",
+  embedUrl: `https://www.youtube-nocookie.com/embed/${DEMO_VIDEO_ID}`,
+  contentUrl: `https://www.youtube.com/watch?v=${DEMO_VIDEO_ID}`,
+  publisher: { "@id": `${PARENT_SITE_URL}/#organization` },
+};
+
+// The five screens, as an explicit sequence. Answer engines asked "how does
+// autoBlade work?" reward a stepped answer they can restate in order, and the
+// steps here are exactly the ones the carousel shows.
+const howToJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "@id": `${SITE_URL}/#howto`,
+  name: "How to edit a multicam podcast with autoBlade",
+  description: SITE_SUMMARY,
+  totalTime: "PT2M",
+  tool: [{ "@type": "HowToTool", name: "autoBlade for macOS" }],
+  step: [
+    {
+      "@type": "HowToStep",
+      position: 1,
+      name: "Import your cameras",
+      text: "Drop in the host, guest and wide camera files. They can have different start times and different lengths.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 2,
+      name: "Let it sync",
+      text: "autoBlade reads the audio and puts every angle on one clock — no clapperboard, no timecode box, no dragging.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 3,
+      name: "Let it cut",
+      text: "Speaker detection drives the switch frame by frame, cutting to whoever is talking and going wide when people talk over each other.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 4,
+      name: "Caption and reframe",
+      text: "A full transcript comes out timed to the edit. The same engine reframes to 9:16 for shorts, with captions you can move, scale and restyle.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 5,
+      name: "Export",
+      text: "Export the finished multicam edit, the transcript and the vertical set. Nothing was uploaded at any point.",
+    },
+  ],
 };
 
 // Mirrors the visible accordion one-for-one — same questions, same answers.
@@ -296,6 +363,14 @@ export default function AutobladePage() {
       />
       <script
         type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <AutobladeAnimations />
@@ -306,14 +381,16 @@ export default function AutobladePage() {
         <AutobladeMarquee />
         <AutobladeScreens />
         <AutobladeFeatures />
-        <AutobladeGet />
         <AutobladeDemo />
-        <AutobladeOffer />
         <AutobladePricingBlock />
+        <AutobladeOffer />
         <AutobladePlatforms />
         <AutobladeStory />
-        <AutobladeGuarantee />
+        {/* Sits directly above the FAQ, whose heading reads "Before you
+            download" — the questions answer whatever the form raised. */}
+        <AutobladeGet />
         <AutobladeFaqSection />
+        <SiteFooter />
       </div>
     </main>
   );

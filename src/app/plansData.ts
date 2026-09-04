@@ -53,3 +53,11 @@ export const PLANS: Plan[] = [
     promoEligible: false,
   },
 ];
+
+/**
+ * The plan BETA100 applies to. Derived from `promoEligible` rather than hard-
+ * coded so the offer card's checkout link can never point at a plan the code
+ * would be rejected on.
+ */
+export const PROMO_PLAN_DATA =
+  PLANS.find((plan) => plan.promoEligible) ?? PLANS[0];
