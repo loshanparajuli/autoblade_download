@@ -43,7 +43,7 @@ export default function OpengraphImage() {
               maxWidth: 900,
             }}
           >
-            The edit that cuts itself.
+            The podcast that edits itself.
           </div>
           <div
             style={{
@@ -54,7 +54,7 @@ export default function OpengraphImage() {
             }}
           >
             An AI multicam podcast app for Mac. Syncs your cameras, transcribes
-            every word, cuts to whoever is talking — all on-device.
+            every word, cuts to whoever is talking. All on-device.
           </div>
         </div>
       </div>

@@ -1,13 +1,13 @@
 import { PLANS, type Plan } from "./plansData";
-import { PROMO_CODE, PROMO_LABEL } from "./promo";
 
 /**
  * One plan card, shared by /pricing and the landing page's pricing block so
  * the two can never show different prices or different checkout links.
  *
- * The BETA100 badge is driven by `promoEligible`, not hard-coded: the code
- * only works on Pro, and a badge on Pro AI would send someone to a checkout
- * that rejects it.
+ * The BETA100 badge that used to sit on Pro is gone from here on purpose: the
+ * code is now presented in exactly one place on the page — the offer band
+ * directly above these cards — so it is copied once, right before checkout,
+ * instead of being repeated on every surface that mentions money.
  */
 function PlanCard({ plan }: { plan: Plan }) {
   return (
@@ -15,12 +15,7 @@ function PlanCard({ plan }: { plan: Plan }) {
       <div className="ab-plan-head">
         <p className="ab-plan-name">
           {plan.name}
-          {plan.featured && <span className="ab-plan-badge">Most capable</span>}
-          {plan.promoEligible && (
-            <span className="ab-plan-badge ab-plan-badge-promo">
-              {PROMO_LABEL} with {PROMO_CODE}
-            </span>
-          )}
+          {plan.badge && <span className="ab-plan-badge">{plan.badge}</span>}
         </p>
         <p className="ab-plan-price">
           <span className="ab-plan-currency">$</span>
@@ -42,7 +37,7 @@ function PlanCard({ plan }: { plan: Plan }) {
       {/* Hosted Dodo Payments checkout — an external origin, so a plain <a>
           rather than next/link. Same tab, which is what buyers expect. */}
       <a className="dark-cta ab-plan-cta" href={plan.checkoutUrl}>
-        Get {plan.name}
+        {plan.cta ?? `Get ${plan.name}`}
       </a>
     </article>
   );

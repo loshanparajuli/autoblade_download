@@ -72,7 +72,7 @@ export function CouponChip({ tone = "light" }: { tone?: "light" | "dark" }) {
         {state === "copied"
           ? `${PROMO_CODE} copied to clipboard`
           : state === "manual"
-            ? `${PROMO_CODE} is selected — press Command C to copy`
+            ? `${PROMO_CODE} is selected. Press Command C to copy`
             : ""}
       </span>
     </button>

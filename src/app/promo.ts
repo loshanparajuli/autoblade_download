@@ -1,9 +1,16 @@
 /**
  * Beta launch promotion + guarantee, in one place.
  *
- * The landing page, the pricing page and the JSON-LD all read from here so the
- * code, the discount and the guarantee window can never drift apart across
- * pages. Change the offer once, here.
+ * The offer band, the download copy and /llms.txt all read from here so the
+ * code, the discount and the guarantee window can never drift apart. Change
+ * the offer once, here.
+ *
+ * Note on placement, not on values: the *code* is rendered on exactly one
+ * surface — the offer band directly above the plan cards. It used to appear in
+ * the sticky banner, a hero chip, the pricing lede, a badge on the Pro card
+ * and the download block as well, which put a discount in front of readers
+ * five times before they had decided they wanted the product. If you add a
+ * sixth mention, you are undoing that.
  */
 
 /** Discount code buyers type into the Dodo Payments checkout. */

@@ -17,7 +17,7 @@ export const FEATURES: Feature[] = [
   {
     id: "sync",
     title: "Sync that just happens",
-    copy: "Three cameras or more, all with different start times and lengths. autoBlade reads the audio and puts them on one clock — no clapperboard, no timecode box, no dragging.",
+    copy: "Three cameras or more, all with different start times and lengths. autoBlade reads the audio and puts them on one clock. No clapperboard, no timecode box, no dragging.",
   },
   {
     id: "cut",
@@ -42,6 +42,6 @@ export const FEATURES: Feature[] = [
   {
     id: "vertical",
     title: "Shorts, from the same cut",
-    copy: "The same engine reframes to 9:16 and follows the speaker vertically. Burn in captions, drag, scale, restyle — then export the set.",
+    copy: "The same engine reframes to 9:16 and follows the speaker vertically. Burn in captions, drag, scale, restyle, then export the set.",
   },
 ];

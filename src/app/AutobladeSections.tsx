@@ -1,8 +1,8 @@
+import { AppleMark } from "./AutobladeIcons";
 import { CouponChip } from "./AutobladeCoupon";
 import { FEATURES } from "./featuresData";
 import { AutobladeNotify } from "./AutobladeNotify";
-import { PROMO_PLAN_DATA } from "./plansData";
-import { PROMO_CODE, PROMO_LABEL, PROMO_PLAN, REFUND_DAYS } from "./promo";
+import { PROMO_PLAN, REFUND_DAYS } from "./promo";
 
 /* Icons are inline, stroke-only and 24×24 on a shared grid, so the feature
    grid stays one weight instead of a ransom note of mismatched glyphs. */
@@ -38,13 +38,6 @@ const icon = {
       <path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4" />
     </>
   ),
-  apple: (
-    <path
-      d="M16.7 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.9-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.9-3-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.7 2.3 2.9 2.2 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.2.9-1.2 1.3-2.5 1.3-2.5s-2.4-1-2.5-3.5ZM14.5 5.3c.6-.8 1-1.9.9-3-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-.9 2.9 1 0 2.1-.5 2.7-1.3Z"
-      fill="currentColor"
-      stroke="none"
-    />
-  ),
 };
 
 function Icon({ children }: { children: React.ReactNode }) {
@@ -74,8 +67,8 @@ export function AutobladeFeatures() {
       </div>
       <p className="ab-section-lede">
         autoBlade is not another timeline to learn. It is the four hours between
-        &ldquo;we finished recording&rdquo; and &ldquo;it&rsquo;s published&rdquo;
-        &mdash; handed to your Mac.
+        &ldquo;we finished recording&rdquo; and &ldquo;it&rsquo;s
+        published&rdquo;, handed to your Mac.
       </p>
       <div className="ab-feature-grid">
         {FEATURES.map((feature) => (
@@ -94,18 +87,20 @@ export function AutobladeFeatures() {
 
 /* Leads with what the product *is* — an AI editor — before the proof points.
    The strip is the first thing under the hero, so it should name the category
-   rather than open on a spec. */
+   rather than open on a spec.
+
+   Trimmed from eleven items to seven. Half the old list was the same claim
+   with "AI" bolted on the front, which made a moving strip directly under the
+   headline read as noise rather than as a summary — and this is the second
+   thing a first-time reader's eye lands on. Seven distinct claims, running at
+   roughly half the old speed, say more. */
 const MARQUEE = [
   "AI-powered podcast editor",
-  "On-device AI engine",
-  "Runs entirely on your Mac",
-  "AI multicam editing",
+  "Automatic multicam sync",
+  "Transcription built in",
+  "2 hours in ~2 minutes",
   "Apple silicon native",
   "Nothing uploaded, ever",
-  "AI blunder detection",
-  "2 hours in ~2 minutes",
-  "Automatic multicam sync",
-  "AI transcription built in",
   "9:16 shorts + captions",
 ];
 
@@ -147,18 +142,12 @@ export function AutobladePlatforms() {
           <span className="ab-platform-status">Available today</span>
           <h3>macOS</h3>
           <p>
-            Apple silicon &mdash; M1 or later. Native, on-device, and the reason
-            a two-hour session turns around in minutes instead of overnight.
+            Apple silicon, M1 or later. Native, on-device, and the reason a
+            two-hour session turns around in minutes instead of overnight.
           </p>
           <div className="ab-platform-foot">
             <a className="dark-cta ab-platform-cta" href="#download">
-              <svg
-                className="ab-apple-mark"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                {icon.apple}
-              </svg>
+              <AppleMark />
               Download for Mac
             </a>
             <p className="ab-platform-note">Free while the beta is open.</p>
@@ -169,8 +158,8 @@ export function AutobladePlatforms() {
           <h3>Windows</h3>
           <p>
             In progress and the most-asked-for thing on the list. No date to
-            promise yet &mdash; leave your email and you will hear the day
-            there is a build worth installing.
+            promise yet. Leave your email and you will hear the day there is a
+            build worth installing.
           </p>
           <div className="ab-platform-foot">
             <AutobladeNotify />
@@ -183,36 +172,41 @@ export function AutobladePlatforms() {
 
 /* ---------------- offer + guarantee ---------------- */
 
+/**
+ * The page's one and only coupon surface. It used to be repeated in the sticky
+ * banner, the hero chip, the pricing lede, a badge on the Pro card and the
+ * download copy; five mentions of a discount is a page that sells on price
+ * before it has sold on product, and none of them were where the code is
+ * actually needed. Now it appears once, as a band immediately above the plan
+ * cards, so it is read and copied on the way into checkout.
+ *
+ * It is a strip rather than a hero card on purpose: it announces a discount on
+ * the *cheaper* plan, and it sits directly above a comparison meant to land on
+ * Pro AI, so it must inform without out-shouting the thing it introduces.
+ */
 export function AutobladeOffer() {
   return (
     <section className="ab-offer" id="offer">
       <div className="ab-offer-card">
-        <p className="ab-offer-eyebrow">Beta offer · limited window</p>
+        <p className="ab-offer-eyebrow">Beta offer · while the beta runs</p>
         <h2 className="ab-offer-title">
-          {PROMO_PLAN}, <em>{PROMO_LABEL}</em>
+          {PROMO_PLAN} is <em>on the house</em>
         </h2>
         <p className="ab-offer-copy">
-          autoBlade is in beta, so beta testers do not pay for the full editor.
-          Enter <strong>{PROMO_CODE}</strong> in the discount field on the{" "}
-          {PROMO_PLAN} checkout and the total drops to zero. Pro AI, with the AI
-          engine on every cut, stays at its normal price.
+          Copy the code, paste it into the discount field at checkout, and{" "}
+          {PROMO_PLAN}{" "}
+          comes to nothing for as long as the beta is open. Pro AI keeps the AI
+          engine on every cut, and keeps its price.
         </p>
         <div className="ab-offer-actions">
           <CouponChip tone="dark" />
-          {/* Straight to the Pro checkout — the plan cards sit directly above
-              this card, so a link back to them would just send people up the
-              page they have already read. External origin, so a plain <a>. */}
-          <a className="ab-offer-cta" href={PROMO_PLAN_DATA.checkoutUrl}>
-            Get {PROMO_PLAN} &mdash; {PROMO_LABEL}
-          </a>
         </div>
         <ul className="ab-offer-points">
-          <li>Nothing to pay on {PROMO_PLAN} while the code is live</li>
-          <li>{REFUND_DAYS}-day money-back guarantee after that</li>
+          <li>{REFUND_DAYS}-day money-back guarantee</li>
           <li>Cancel whenever you want</li>
+          <li>No card charged on {PROMO_PLAN} while the code is live</li>
         </ul>
       </div>
     </section>
   );
 }
-

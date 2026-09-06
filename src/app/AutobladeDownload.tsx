@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 
+import { AppleMark } from "./AutobladeIcons";
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const FORMSPREE_URL = "https://formspree.io/f/mjybqewk";
 // Resolves to the .dmg of whatever release is tagged "Latest" on GitHub.
@@ -45,7 +47,7 @@ export function AutobladeDownload() {
       window.location.assign(DMG_URL);
       setStatus("done");
       setMessage(
-        "autoBlade is currently in beta — your download has started. We've noted your interest for early access. The full application launches this fall 2026."
+        "autoBlade is currently in beta. Your download has started, and we've noted your interest for early access. The full application launches this fall 2026."
       );
     } catch {
       setStatus("error");
@@ -82,6 +84,10 @@ export function AutobladeDownload() {
             type="submit"
             disabled={status === "loading"}
           >
+            {/* The mark is dropped while the request is in flight: "Sending…"
+                is a state, not a platform, and the logo alongside it reads as
+                though something is being sent to Apple. */}
+            {status !== "loading" && <AppleMark />}
             {buttonLabel}
           </button>
         </div>

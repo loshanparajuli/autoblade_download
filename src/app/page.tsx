@@ -14,7 +14,7 @@ import { AutobladeFaq } from "./AutobladeFaq";
 import { FAQS } from "./faqData";
 import { AutobladePlanCards } from "./AutobladePlans";
 import { PLANS } from "./plansData";
-import { PROMO_CODE, PROMO_LABEL, PROMO_PLAN, REFUND_DAYS } from "./promo";
+import { REFUND_DAYS } from "./promo";
 import {
   AutobladeFeatures,
   AutobladeMarquee,
@@ -54,24 +54,23 @@ function AutobladeHero() {
         <span />
       </div>
 
+      {/* Eyebrow, headline, one sentence, two buttons, three numbers — in that
+          order and nothing else. The beta chip that used to sit above the
+          headline is gone: it put a discount code in front of a reader who did
+          not yet know what the product was, and its pulsing dot competed with
+          the one thing this screen has to land. */}
       <div className="hero-title-block">
-        <p className="ab-hero-flag">
-          <span className="ab-hero-flag-dot" aria-hidden="true" />
-          Beta is open · code <strong>{PROMO_CODE}</strong> takes {PROMO_LABEL}{" "}
-          {PROMO_PLAN}
-        </p>
-
         <h1 className="ab-title">
-          the edit that
+          the podcast that
           <br />
-          <em>cuts itself.</em>
+          <em>edits itself.</em>
         </h1>
 
         <p className="ab-lede">
-          Drop in your host, guest, and wide cameras. autoBlade syncs them,
-          transcribes every word, and cuts to whoever&apos;s talking &mdash;
-          powered by an on-device AI engine. A two-hour episode, done in about
-          two minutes.
+          Drop in your host, guest and wide cameras, then go make a coffee.
+          autoBlade syncs them, transcribes every word, and cuts to
+          whoever&apos;s talking. All on your Mac, all on-device. A two-hour
+          episode is done before you&apos;re back.
         </p>
 
         <div className="ab-hero-ctas">
@@ -79,7 +78,7 @@ function AutobladeHero() {
             Download for Mac
           </a>
           <a className="ab-ghost-cta" href="#walkthrough">
-            See how it works
+            Watch it work
           </a>
         </div>
 
@@ -106,8 +105,8 @@ function AutobladeScreens() {
         <h2>Five screens, one night saved</h2>
       </div>
       <p className="ab-section-lede">
-        Import, sync, cut, caption, export. That is the whole app &mdash; there
-        is no sixth screen where the real work is hiding.
+        Import, sync, cut, caption, export. That is the whole app. There is no
+        sixth screen where the real work is hiding.
       </p>
       <AutobladeCarousel />
     </section>
@@ -178,9 +177,8 @@ function AutobladeFaqSection() {
       <AutobladeFaq />
       <p className="ab-faq-foot">
         Still unsure about something?{" "}
-        <a href="mailto:losh@fromsilicon.com">Email me directly</a>{" "}
-        &mdash; it
-        reaches the person who wrote the app.
+        <a href="mailto:losh@fromsilicon.com">Email me directly</a>. It reaches
+        the person who wrote the app.
       </p>
     </section>
   );
@@ -198,9 +196,9 @@ function AutobladePricingBlock() {
         <h2>What it costs</h2>
       </div>
       <p className="ab-section-lede">
-        Two plans, no seat maths, no per-export fees. {PROMO_PLAN} is{" "}
-        {PROMO_LABEL} during the beta with code <strong>{PROMO_CODE}</strong>{" "}
-        &mdash; Pro AI is full price.
+        Two plans, no seat maths, no per-export fees. Pro caps out at 50
+        podcasts a month. <strong>Pro AI</strong> takes the cap off and puts
+        the AI engine on every cut.
       </p>
       <AutobladePlanCards />
       <p className="ab-pricing-note">
@@ -221,10 +219,9 @@ function AutobladeGet() {
       </div>
       <div className="ab-get-inner">
         <p className="ab-get-copy">
-          autoBlade is currently in beta. Enter your email for early access
-          &mdash; the full app launches fall 2026. {PROMO_PLAN} is{" "}
-          {PROMO_LABEL} with code <strong>{PROMO_CODE}</strong>, and every plan
-          carries a {REFUND_DAYS}-day money-back guarantee.
+          autoBlade is in beta and free to try. Leave your email, take the
+          build, and tell me what breaks. 1.0 lands fall 2026, and every paid
+          plan carries a {REFUND_DAYS}-day money-back guarantee.
         </p>
         <AutobladeDownload />
       </div>
@@ -286,7 +283,7 @@ const videoJsonLd = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
   "@id": `${SITE_URL}/#walkthrough-video`,
-  name: "autoBlade walkthrough — three cameras in, one finished episode out",
+  name: "autoBlade walkthrough: three cameras in, one finished episode out",
   description:
     "A full walkthrough of autoBlade editing a multicam podcast: importing the host, guest and wide cameras, syncing them from audio, transcribing the session, and cutting automatically to whoever is speaking.",
   thumbnailUrl: `https://i.ytimg.com/vi/${DEMO_VIDEO_ID}/maxresdefault.jpg`,
@@ -319,7 +316,7 @@ const howToJsonLd = {
       "@type": "HowToStep",
       position: 2,
       name: "Let it sync",
-      text: "autoBlade reads the audio and puts every angle on one clock — no clapperboard, no timecode box, no dragging.",
+      text: "autoBlade reads the audio and puts every angle on one clock. No clapperboard, no timecode box, no dragging.",
     },
     {
       "@type": "HowToStep",
@@ -382,8 +379,11 @@ export default function AutobladePage() {
         <AutobladeScreens />
         <AutobladeFeatures />
         <AutobladeDemo />
-        <AutobladePricingBlock />
+        {/* The offer band is the page's only copy-the-code surface, and it
+            sits directly above the plan cards on purpose — you pick up the
+            code on the way into checkout, not four screens earlier. */}
         <AutobladeOffer />
+        <AutobladePricingBlock />
         <AutobladePlatforms />
         <AutobladeStory />
         {/* Sits directly above the FAQ, whose heading reads "Before you

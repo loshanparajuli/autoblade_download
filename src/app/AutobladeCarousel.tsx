@@ -102,7 +102,7 @@ function CutStage() {
         <span className="shot-playhead" />
       </div>
       <div className="shot-transcript">
-        <p><b>Host</b> so the thing nobody tells you is—</p>
+        <p><b>Host</b> so the thing nobody tells you is…</p>
         <p><b>Guest</b> right, and that&rsquo;s exactly where it breaks.</p>
       </div>
     </div>
@@ -174,7 +174,7 @@ const SLIDES: Slide[] = [
     id: "export",
     step: "05 · Export",
     title: "Ship the whole set",
-    copy: "A finished 16:9 master, your shorts, and the transcript — rendered locally and dropped in a folder.",
+    copy: "A finished 16:9 master, your shorts, and the transcript, rendered locally and dropped in a folder.",
     stage: <ExportStage />,
   },
 ];
@@ -253,7 +253,7 @@ export function AutobladeCarousel() {
             <i />
             <i />
           </span>
-          <span className="ab-window-title">autoBlade — {active.title}</span>
+          <span className="ab-window-title">autoBlade · {active.title}</span>
           <span className="ab-window-badge" aria-hidden="true">
             on-device
           </span>

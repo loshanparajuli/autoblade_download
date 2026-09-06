@@ -37,7 +37,7 @@ export function AutobladeNotify() {
         },
         body: JSON.stringify({
           email: trimmed,
-          message: "autoBlade for Windows — notify me at launch",
+          message: "autoBlade for Windows: notify me at launch",
         }),
       });
 

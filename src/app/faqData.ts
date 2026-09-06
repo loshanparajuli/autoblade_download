@@ -12,7 +12,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "How long does a two-hour episode take?",
-    a: "A two-hour podcast takes under two minutes of your work — dropping the files in and picking your options. The system does the rest on its own while you get on with something else. Nothing is queued behind anyone else, because nothing leaves your computer.",
+    a: "A two-hour podcast takes under two minutes of your work: dropping the files in and picking your options. The system does the rest on its own while you get on with something else. Nothing is queued behind anyone else, because nothing leaves your computer.",
   },
   {
     q: "Does my footage get uploaded anywhere?",

@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     // single <link> rather than a non-standard robots.txt directive.
     types: {
       "text/plain": [
-        { url: "/llms.txt", title: `${SITE_NAME} — plain-text summary for LLMs` },
+        { url: "/llms.txt", title: `${SITE_NAME}: plain-text summary for LLMs` },
       ],
     },
   },

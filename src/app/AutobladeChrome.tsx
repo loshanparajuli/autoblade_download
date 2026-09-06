@@ -4,15 +4,19 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { PROMO_CODE, PROMO_LABEL, PROMO_PLAN } from "./promo";
-
-/** Sticky beta notice. States the launch date and the live offer once. */
+/**
+ * Sticky beta notice. Says where the product is and when 1.0 lands — nothing
+ * else. The discount code deliberately does not appear here: a reader meets
+ * this strip before they have any idea what autoBlade is, so leading with a
+ * coupon sells a price before it has sold a product. The code lives in one
+ * place instead, the offer band directly above the plan cards.
+ */
 export function AutobladeBetaBanner() {
   return (
     <div className="ab-beta-banner">
       <p>
-        <strong>Beta test open</strong> · code <b>{PROMO_CODE}</b> takes{" "}
-        {PROMO_LABEL} {PROMO_PLAN} at checkout · full launch fall 2026
+        <strong>Beta is open</strong> · autoBlade is editing real episodes
+        today · 1.0 lands fall 2026
       </p>
     </div>
   );

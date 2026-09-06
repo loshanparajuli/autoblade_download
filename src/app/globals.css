@@ -149,14 +149,15 @@ img {
 }
 
 .hero-title-block h1 {
-  width: 681px;
+  width: 800px;
+  max-width: 100%;
   margin: 0;
   color: var(--ink);
   font-family: var(--serif);
-  font-size: 72px;
+  font-size: 86px;
   font-weight: 400;
-  letter-spacing: -1.4px;
-  line-height: 65px;
+  letter-spacing: -2px;
+  line-height: 0.9;
   text-align: center;
   text-transform: lowercase;
 }
@@ -376,12 +377,16 @@ img {
     padding: 0 0 64px;
   }
 
+  /* 64px was sized for the old three-word headline. "the podcast that" is
+     longer, and at 64px its line measures ~322px against roughly 312px of
+     usable width on a 360px screen, so it wrapped to a stray third line.
+     60px clears it on the narrowest phones still worth designing for. */
   .hero-title-block h1 {
     width: 346px;
     max-width: 100%;
-    font-size: 64px;
+    font-size: 60px;
     letter-spacing: -1.6px;
-    line-height: 70.4px;
+    line-height: 0.95;
   }
 
   .dark-cta {
@@ -643,12 +648,15 @@ img {
   max-width: 100%;
 }
 
+/* Deliberately well below the headline in size. The two used to sit close
+   enough that the eye had to decide which to read first; the gap between 86px
+   and 14px makes the order obvious without a rule or a colour change. */
 .ab-lede {
-  max-width: 560px;
+  max-width: 540px;
   margin: 0 auto;
   color: var(--muted);
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.75;
   text-align: center;
 }
 
@@ -748,6 +756,7 @@ img {
 .ab-download-btn {
   min-width: 0;
   height: 44px;
+  gap: 9px;
   padding: 0 24px;
   transition: background 0.15s;
 }
@@ -857,7 +866,7 @@ img {
   }
 
   .ab-lede {
-    font-size: 14px;
+    font-size: 13.5px;
   }
 
   .ab-demo {
@@ -945,11 +954,25 @@ img {
   background: var(--bg);
 }
 
+/* The higher tier inverts to --ink and takes a gradient top edge, so the pair
+   reads as "one of these two, and it is this one" rather than as a list in
+   ascending price order. */
 .ab-plan-featured {
   --line: #2c3a45;
+  position: relative;
   border-color: var(--ink);
   background: var(--ink);
   color: #fff;
+}
+
+.ab-plan-featured::before {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  left: -1px;
+  height: 3px;
+  background: var(--ab-grad);
+  content: "";
 }
 
 .ab-plan-head {
@@ -973,13 +996,17 @@ img {
   color: #9aa7b2;
 }
 
+/* One badge, on the featured plan. It is the only chrome either card carries,
+   so it can afford the full ramp — nothing else is competing for the accent. */
 .ab-plan-badge {
   padding: 3px 8px;
-  border: 1px solid var(--ab-accent);
+  border: 1px solid transparent;
+  background: var(--ab-grad);
   color: #fff;
   font-size: 9px;
+  font-weight: 700;
   letter-spacing: 0.8px;
-  background: var(--ab-accent);
+  text-transform: uppercase;
 }
 
 /* Serif numerals to match the display type in .hero-title-block / h2. */
@@ -1027,6 +1054,7 @@ img {
 .ab-plan-featured .ab-plan-tagline {
   color: #9aa7b2;
 }
+
 
 /* Feature list. Fills the space between the price and the CTA, so `flex: 1`
    is what keeps both cards' buttons on the same baseline. */
@@ -1089,8 +1117,14 @@ img {
   border-color: #7fb3dc;
 }
 
+/* Labels here can run to a full phrase ("Get Pro · 7-day free trial"), which
+   .dark-cta's nowrap and 27px side padding were never sized for. min-width: 0
+   lets the button take the column's width instead of its own floor, and the
+   tighter padding buys back the room the longer label needs. */
 .ab-plan-cta {
   width: 100%;
+  min-width: 0;
+  padding: 0 16px;
 }
 
 .ab-plan-featured .ab-plan-cta {
@@ -1133,6 +1167,15 @@ img {
 
   .ab-plan-amount {
     font-size: 54px;
+  }
+
+  /* .dark-cta scales to 14px with 32px padding at this breakpoint, sized for
+     "DOWNLOAD FOR MAC". Inside a plan card the available width has gone the
+     other way, so the plan buttons hold the desktop type size. */
+  .ab-plan-cta {
+    padding: 0 14px;
+    font-size: 12px;
+    letter-spacing: 0.6px;
   }
 }
 
@@ -1268,11 +1311,16 @@ img {
   pointer-events: none;
 }
 
+/* Static. These three blobs used to drift and rescale on three separate
+   19–27s loops, which meant the background behind the headline was never
+   twice the same — motion with nothing to say, directly underneath the one
+   sentence the page needs a first-time reader to finish. They now hold still
+   and sit back, so the wash reads as paper stock rather than as an event. */
 .ab-aurora span {
   position: absolute;
   border-radius: 50%;
   filter: blur(96px);
-  opacity: 0.95;
+  opacity: 0.62;
 }
 
 /* A white core over the blobs. Without it the three fields meet in the middle
@@ -1297,7 +1345,6 @@ img {
   max-width: 520px;
   aspect-ratio: 1;
   background: radial-gradient(circle, rgb(27 108 168 / 72%), transparent 64%);
-  animation: ab-drift-a 19s ease-in-out infinite alternate;
 }
 
 .ab-aurora-b {
@@ -1307,7 +1354,6 @@ img {
   max-width: 480px;
   aspect-ratio: 1;
   background: radial-gradient(circle, rgb(95 111 216 / 66%), transparent 64%);
-  animation: ab-drift-b 23s ease-in-out infinite alternate;
 }
 
 .ab-aurora-c {
@@ -1317,77 +1363,12 @@ img {
   max-width: 430px;
   aspect-ratio: 1;
   background: radial-gradient(circle, rgb(20 163 163 / 58%), transparent 64%);
-  animation: ab-drift-c 27s ease-in-out infinite alternate;
-}
-
-@keyframes ab-drift-a {
-  to {
-    transform: translate3d(9%, 7%, 0) scale(1.14);
-  }
-}
-
-@keyframes ab-drift-b {
-  to {
-    transform: translate3d(-11%, 10%, 0) scale(1.08);
-  }
-}
-
-@keyframes ab-drift-c {
-  to {
-    transform: translate3d(7%, -9%, 0) scale(1.16);
-  }
 }
 
 .ab-hero .hero-rule,
 .ab-hero .hero-title-block {
   position: relative;
   z-index: 1;
-}
-
-/* Inline-block rather than flex: as a flex row the three runs of text became
-   three items that wrapped into ragged columns on a phone. As inline content
-   it just wraps like the sentence it is. */
-.ab-hero-flag {
-  display: inline-block;
-  max-width: 100%;
-  margin: 0;
-  padding: 7px 16px;
-  border: 1px solid rgb(27 108 168 / 28%);
-  border-radius: 999px;
-  background: rgb(255 255 255 / 76%);
-  backdrop-filter: blur(6px);
-  color: var(--ink);
-  font-size: 12px;
-  letter-spacing: 0.2px;
-  line-height: 1.5;
-  text-align: center;
-  text-wrap: balance;
-}
-
-.ab-hero-flag strong {
-  font-weight: 700;
-  letter-spacing: 0.6px;
-}
-
-.ab-hero-flag-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: 8px;
-  vertical-align: middle;
-  border-radius: 50%;
-  background: var(--ab-g4);
-  box-shadow: 0 0 0 0 rgb(20 163 163 / 55%);
-  animation: ab-pulse 2.4s ease-out infinite;
-}
-
-@keyframes ab-pulse {
-  70% {
-    box-shadow: 0 0 0 7px rgb(20 163 163 / 0%);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgb(20 163 163 / 0%);
-  }
 }
 
 .ab-hero-ctas {
@@ -1397,38 +1378,20 @@ img {
   gap: 12px;
 }
 
+/* No sheen sweep any more. A primary button that glints on a loop reads as a
+   thing that is already doing something, so it stops reading as a thing to
+   press; the hover lift below is the only motion it needs, and that one is a
+   reply to the reader rather than an interruption of them. */
 .ab-hero-cta {
   position: relative;
-  overflow: hidden;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-/* A slow specular sweep across the primary CTA. It never changes the button's
-   size or colour, so it reads as sheen rather than as a state change. */
-.ab-hero-cta::after {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -60%;
-  width: 40%;
-  background: linear-gradient(
-    100deg,
-    transparent,
-    rgb(255 255 255 / 32%),
-    transparent
-  );
-  content: "";
-  animation: ab-sheen 4.6s ease-in-out infinite;
-}
-
-@keyframes ab-sheen {
-  0%,
-  55% {
-    transform: translateX(0);
-  }
-  85%,
-  100% {
-    transform: translateX(420%);
-  }
+.ab-hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 22%);
 }
 
 .ab-hero-stats {
@@ -1486,7 +1449,9 @@ img {
 .ab-marquee-track {
   display: flex;
   width: max-content;
-  animation: ab-marquee 34s linear infinite;
+  /* 34s made the strip a second thing competing with the headline for the
+     eye. At 68s it is legible at a glance and ignorable otherwise. */
+  animation: ab-marquee 68s linear infinite;
 }
 
 .ab-marquee-run {
@@ -2308,9 +2273,13 @@ img {
 }
 
 /* ---------------- offer ---------------- */
+/* Sits directly above the pricing section now, and shares its ground: the
+   band, the heading and the plan cards are one move — get the code, read the
+   comparison, pick — rather than three separately-framed blocks. */
 .ab-offer {
-  padding: 62px 24px 66px;
+  padding: 56px 24px 6px;
   border-top: 1px solid var(--line);
+  background: var(--soft);
 }
 
 .ab-offer-card {
@@ -2318,7 +2287,7 @@ img {
   max-width: 1120px;
   margin: 0 auto;
   overflow: hidden;
-  padding: 40px 44px 34px;
+  padding: 30px 44px 26px;
   background: var(--ab-grad);
   color: #fff;
   text-align: center;
@@ -2351,13 +2320,16 @@ img {
   text-transform: uppercase;
 }
 
+/* 54px previously — larger than the "What it costs" heading it now sits above,
+   which put a discount on the cheaper plan at the top of the pricing move.
+   At 36px it introduces the section instead of upstaging it. */
 .ab-offer-title {
   margin: 0;
   font-family: var(--serif);
-  font-size: 54px;
+  font-size: 36px;
   font-weight: 400;
-  letter-spacing: -1.4px;
-  line-height: 1;
+  letter-spacing: -1px;
+  line-height: 1.1;
 }
 
 .ab-offer-title em {
@@ -2379,32 +2351,16 @@ img {
   letter-spacing: 0.6px;
 }
 
+/* One action: copy the code. The "Get Pro" button that used to sit beside the
+   chip pointed at a checkout the plan cards are now eight inches below, and
+   it sent people to the cheaper plan before they had seen the comparison. */
 .ab-offer-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-top: 22px;
-}
-
-.ab-offer-cta {
-  display: inline-flex;
-  height: 44px;
-  align-items: center;
-  justify-content: center;
-  padding: 0 26px;
-  background: #fff;
-  color: var(--ink);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: transform 0.18s ease;
-}
-
-.ab-offer-cta:hover {
-  transform: translateY(-2px);
+  margin-top: 20px;
 }
 
 /* One row across the full card. The three points are a single reassurance,
@@ -2414,8 +2370,8 @@ img {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  gap: 40px;
-  margin: 26px 0 0;
+  gap: 34px;
+  margin: 22px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -2731,11 +2687,6 @@ img {
 }
 
 @media (max-width: 767px) {
-  .ab-hero-flag {
-    font-size: 11px;
-    text-align: center;
-  }
-
   .ab-hero-ctas {
     width: 100%;
     flex-direction: column;
@@ -2824,25 +2775,20 @@ img {
   }
 
   .ab-offer-card {
-    padding: 40px 24px 34px;
+    padding: 28px 24px 24px;
   }
 
   .ab-offer-title {
-    font-size: 46px;
+    font-size: 30px;
   }
 
   .ab-offer-actions {
     flex-direction: column;
   }
 
-  .ab-coupon-chip,
-  .ab-offer-cta {
+  .ab-coupon-chip {
     width: 100%;
     justify-content: space-between;
-  }
-
-  .ab-offer-cta {
-    justify-content: center;
   }
 
   .ab-offer-points {
@@ -2864,10 +2810,7 @@ img {
 /* Reduced motion: the page keeps its layout and gradients, and loses every
    loop. The aurora, marquee and stage animations are ambient, not content. */
 @media (prefers-reduced-motion: reduce) {
-  .ab-aurora span,
   .ab-marquee-track,
-  .ab-hero-cta::after,
-  .ab-hero-flag-dot,
   .shot-file,
   .shot-wave-guest,
   .shot-wave-wide,
@@ -3339,11 +3282,11 @@ img {
   }
 
   .ab-offer-card {
-    padding: 36px 28px 30px;
+    padding: 28px 28px 24px;
   }
 
   .ab-offer-title {
-    font-size: 46px;
+    font-size: 30px;
   }
 
   /* Three nowrap points stop fitting well before phone width. */
@@ -3444,8 +3387,17 @@ img {
 
 /* The plan cards on the landing page. Same component as /pricing, so only the
    surrounding section chrome differs. */
+/* No border-top: the offer band immediately above already carries the rule
+   that separates this move from the walkthrough, and a second hairline here
+   would cut the band away from the cards it introduces. The top padding drops
+   to match — the section starts at the band, not at the heading. */
 .ab-pricing-inline {
-  border-top: 1px solid var(--line);
+  /* .ab-pricing sets a border-top of its own; this variant has to switch it
+     off rather than merely not re-declare it. The offer band immediately
+     above already carries the rule that opens this move, and a second
+     hairline here cuts the band away from the cards it introduces. */
+  border-top: 0;
+  padding-top: 34px;
   background: var(--soft);
 }
 
@@ -3472,19 +3424,10 @@ img {
   color: var(--ab-g1);
 }
 
-/* BETA100 applies to Pro only, so the badge sits on Pro. It wraps under the
-   plan name on narrow cards rather than squeezing the name. */
+/* The badge wraps under the plan name on narrow cards rather than squeezing
+   the name. */
 .ab-plan-name {
   flex-wrap: wrap;
-}
-
-.ab-plan-badge-promo {
-  border-color: transparent;
-  background: var(--ab-grad);
-  color: #fff;
-  font-weight: 700;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
 }
 
 /* ---- more of the brand ramp, for consistency ---- */
@@ -3522,7 +3465,4 @@ img {
     margin-top: 28px;
   }
 
-  .ab-plan-badge-promo {
-    font-size: 8.5px;
-  }
 }

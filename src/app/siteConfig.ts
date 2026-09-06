@@ -20,7 +20,7 @@ export const SITE_TAGLINE = "2 minute for 2hr podcast";
  * podcast editor", "Mac". The tagline still carries the voice on the page.
  * Kept under ~60 chars so Google doesn't truncate it.
  */
-export const SITE_TITLE = "autoBlade — AI Multicam Podcast Editor for Mac";
+export const SITE_TITLE = "autoBlade | AI Multicam Podcast Editor for Mac";
 
 /**
  * The meta description. Not a ranking factor, but it is the snippet that wins
@@ -29,19 +29,19 @@ export const SITE_TITLE = "autoBlade — AI Multicam Podcast Editor for Mac";
  * where Google starts truncating.
  */
 export const SITE_DESCRIPTION =
-  "autoBlade syncs your multicam podcast footage, transcribes every word, and cuts to whoever is talking — on-device on your Mac. A 2-hour episode in ~2 minutes.";
+  "autoBlade syncs your multicam podcast footage, transcribes every word, and cuts to whoever is talking, on-device on your Mac. A 2-hour episode in ~2 minutes.";
 
 /**
  * The longer prose version, for surfaces with room: OG/social cards, the PWA
  * manifest, schema.org descriptions, llms.txt. Same claims, more air.
  */
 export const SITE_DESCRIPTION_LONG =
-  "autoBlade is an AI-powered multicam podcast app for Mac. Drop in your host, guest and wide cameras and it syncs them from audio alone, transcribes every word, and cuts to whoever is talking — entirely on your own machine, with no upload and no render queue.";
+  "autoBlade is an AI-powered multicam podcast app for Mac. Drop in your host, guest and wide cameras and it syncs them from audio alone, transcribes every word, and cuts to whoever is talking, entirely on your own machine, with no upload and no render queue.";
 
 /** One-line answer to "what is this?", written to be quotable verbatim by an
     answer engine. */
 export const SITE_SUMMARY =
-  "autoBlade is a macOS app that automatically edits multicam podcasts: it syncs the camera angles from their audio, transcribes the session, and cuts to whichever person is speaking — all on-device on Apple silicon.";
+  "autoBlade is a macOS app that automatically edits multicam podcasts: it syncs the camera angles from their audio, transcribes the session, and cuts to whichever person is speaking, all on-device on Apple silicon.";
 
 /** Hard requirements, stated once so no surface can contradict another. */
 export const REQUIREMENTS = "macOS on Apple silicon (M1 or later)";
