@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 
+import { track } from "./analytics";
 import { AppleMark } from "./AutobladeIcons";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -28,6 +29,9 @@ export function AutobladeDownload() {
 
     setStatus("loading");
     setMessage("");
+    // Before the request, not after: the success path calls location.assign()
+    // and the page starts unloading, which can cut a later beacon short.
+    track("download_submit");
 
     try {
       const res = await fetch(FORMSPREE_URL, {

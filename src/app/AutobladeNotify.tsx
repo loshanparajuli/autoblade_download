@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 
+import { track } from "./analytics";
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /** Separate Formspree endpoint from the beta download list, so "tell me when
@@ -43,6 +45,9 @@ export function AutobladeNotify() {
 
       if (!res.ok) throw new Error("request failed");
 
+      // Only on success here. Nothing navigates away, so there is no risk of
+      // losing the beacon, and a failed submit is not demand.
+      track("windows_waitlist");
       setStatus("done");
       setEmail("");
       setMessage("You're on the Windows list. You'll hear the day there's a build.");

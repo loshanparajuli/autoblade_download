@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
+import { AutobladeAnalytics } from "./AutobladeAnalytics";
 import {
   CONTACT_EMAIL,
   PARENT_SITE_NAME,
@@ -191,6 +192,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <AutobladeAnalytics />
         {children}
       </body>
     </html>

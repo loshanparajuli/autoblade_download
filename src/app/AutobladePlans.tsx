@@ -1,3 +1,6 @@
+"use client";
+
+import { track } from "./analytics";
 import { PLANS, type Plan } from "./plansData";
 
 /**
@@ -22,6 +25,23 @@ function PlanCard({ plan }: { plan: Plan }) {
           <span className="ab-plan-amount">{plan.price}</span>
           <span className="ab-plan-period">/ month</span>
         </p>
+        {/* Rendered only once a yearly Dodo product exists. An annual line
+            pointing at the monthly checkout would bill monthly against a
+            yearly promise, so an unset URL hides the option entirely rather
+            than shipping a link that charges the wrong thing. */}
+        {plan.annual?.checkoutUrl && (
+          <p className="ab-plan-annual">
+            <a
+              href={plan.annual.checkoutUrl}
+              onClick={() =>
+                track("checkout_click", { plan: plan.id, term: "annual" })
+              }
+            >
+              or ${plan.annual.price} a year
+            </a>
+            <span>{plan.annual.saving}</span>
+          </p>
+        )}
         <p className="ab-plan-tagline">{plan.tagline}</p>
       </div>
 
@@ -36,7 +56,11 @@ function PlanCard({ plan }: { plan: Plan }) {
 
       {/* Hosted Dodo Payments checkout — an external origin, so a plain <a>
           rather than next/link. Same tab, which is what buyers expect. */}
-      <a className="dark-cta ab-plan-cta" href={plan.checkoutUrl}>
+      <a
+        className="dark-cta ab-plan-cta"
+        href={plan.checkoutUrl}
+        onClick={() => track("checkout_click", { plan: plan.id, term: "monthly" })}
+      >
         {plan.cta ?? `Get ${plan.name}`}
       </a>
     </article>

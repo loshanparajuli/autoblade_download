@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { track } from "./analytics";
 import { PROMO_CODE } from "./promo";
 
 type State = "idle" | "copied" | "manual";
@@ -39,6 +40,10 @@ export function CouponChip({ tone = "light" }: { tone?: "light" | "dark" }) {
   // chip to a "press ⌘C" prompt with the code selected — never a silent no-op.
   function copy() {
     flash("copied", 2000);
+    // Fired on intent, not on the clipboard write resolving: the write is
+    // rejected outright whenever the document isn't focused, and someone who
+    // then hits Cmd-C has still taken the code.
+    track("coupon_copy");
 
     const write = navigator.clipboard?.writeText(PROMO_CODE);
     if (!write) {

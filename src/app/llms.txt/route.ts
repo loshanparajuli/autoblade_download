@@ -1,7 +1,13 @@
 import { FAQS } from "../faqData";
 import { FEATURES } from "../featuresData";
 import { PLANS } from "../plansData";
-import { PROMO_CODE, PROMO_LABEL, PROMO_PLAN, REFUND_DAYS } from "../promo";
+import {
+  PROMO_CODE,
+  PROMO_LABEL,
+  PROMO_LIMIT,
+  PROMO_PLAN,
+  REFUND_DAYS,
+} from "../promo";
 import {
   CONTACT_EMAIL,
   PARENT_SITE_NAME,
@@ -34,7 +40,7 @@ const bullet = (items: string[]) => items.map((i) => `- ${i}`).join("\n");
 function plansSection() {
   return PLANS.map((plan) => {
     const promo = plan.promoEligible
-      ? `\nPromotion: code ${PROMO_CODE} takes ${PROMO_LABEL} this plan during the beta.`
+      ? `\nPromotion: code ${PROMO_CODE} takes ${PROMO_LABEL} this plan, for the first ${PROMO_LIMIT} customers and only while the beta lasts.`
       : "\nPromotion: none. This plan is full price.";
     return [
       `### ${SITE_NAME} ${plan.name}: $${plan.price} per month (USD)`,
@@ -53,7 +59,7 @@ function faqSection() {
 }
 
 function featuresSection() {
-  return FEATURES.map((f) => `### ${f.title}\n\n${f.copy}`).join("\n\n");
+  return FEATURES.map((f) => `### ${f.title}\n\n${f.lead} ${f.copy}`).join("\n\n");
 }
 
 function buildLlmsTxt() {
@@ -78,7 +84,7 @@ ${bullet([
   `**Input**: separate camera files (for example host, guest and wide), with different start times and different lengths. No clapperboard, timecode box or manual alignment is required.`,
   `**Output**: a finished multicam edit, a transcript timed to that edit, and optional 9:16 vertical cuts with burned-in, restyleable captions.`,
   `**Editability**: the output is a real edit, not a locked render. It can be taken into another editor.`,
-  `**Pricing**: ${PLANS.map((p) => `${p.name} $${p.price}/month`).join("; ")} (USD, billed monthly). Code ${PROMO_CODE} takes ${PROMO_LABEL} ${PROMO_PLAN} during the beta. Every plan carries a ${REFUND_DAYS}-day money-back guarantee. Checkout is handled by Dodo Payments.`,
+  `**Pricing**: ${PLANS.map((p) => `${p.name} $${p.price}/month`).join("; ")} (USD, billed monthly). Code ${PROMO_CODE} takes ${PROMO_LABEL} ${PROMO_PLAN} for the first ${PROMO_LIMIT} customers, while the beta lasts. Every plan carries a ${REFUND_DAYS}-day money-back guarantee. Checkout is handled by Dodo Payments.`,
   `**Contact**: ${CONTACT_EMAIL}`,
 ])}
 

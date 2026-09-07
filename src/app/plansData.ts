@@ -8,6 +8,21 @@ export type Plan = {
   badge?: string;
   /** Overrides the default "Get {name}" button label. */
   cta?: string;
+  /**
+   * Optional yearly alternative, shown under the monthly price.
+   *
+   * `checkoutUrl` must be a *separate* Dodo product priced yearly — reusing the
+   * monthly link would bill monthly while the page promised a year. The card
+   * renders nothing at all until that URL is filled in, so an unconfigured
+   * annual plan is invisible rather than broken.
+   */
+  annual?: {
+    /** Total charged once per year, in USD. */
+    price: string;
+    /** What the buyer keeps versus paying monthly, e.g. "two months free". */
+    saving: string;
+    checkoutUrl: string;
+  };
   /** Dodo Payments hosted checkout. Each plan has its own product id. */
   checkoutUrl: string;
   featured: boolean;
@@ -32,16 +47,22 @@ export const PLANS: Plan[] = [
     id: "pro",
     name: "Pro",
     price: "13.99",
-    tagline: "The full editor. Sync, transcribe and cut, all on your Mac.",
-    // The trial leads the list and is repeated on the button. It is the only
-    // reason to click that does not require deciding on a price first, so it
-    // is stated where the eye lands and again where the hand goes.
-    cta: "Get Pro · 7-day free trial",
+    // Was "The full editor. Sync, transcribe and cut, all on your Mac." — which
+    // promised transcription on a card whose feature list does not include it.
+    // A tagline that contradicts the rows underneath it is the kind of thing a
+    // buyer notices after paying, so it now claims only what Pro ships.
+    tagline: "The editor itself. Sync your cameras and cut to whoever is talking, all on your Mac.",
+    // The trial lives on the button and nowhere else. It was also a feature
+    // row, which said "7-day" while the app grants three — so the number is
+    // gone from the site entirely rather than restated wrongly in two places.
+    // If the trial length is ever fixed and worth advertising, put the number
+    // in one place, not two.
+    cta: "Get Pro · free trial",
     features: [
-      "7-day free trial",
       "Up to 50 podcasts per month",
       "Automatic multicam sync, from audio alone",
       "Add your own API key for AI features",
+      "Works fully offline, no internet needed",
       "Sessions are fully private and secured",
       "24/7 email support",
     ],
@@ -57,12 +78,28 @@ export const PLANS: Plan[] = [
     tagline:
       "Everything in Pro, uncapped, with autoBlade's AI engine on every cut.",
     badge: "Best value",
+    cta: "Get Pro AI · free trial",
+    // Yearly is offered on this plan only. It is the plan that actually earns
+    // during the beta — Pro is free with the code — so it is the one where a
+    // year up front is worth discounting for.
+    //
+    // A separate Dodo product, because Dodo does not support two billing
+    // intervals on one: "create separate products for each pricing option
+    // (for example, Monthly and Yearly)". Never point this at the monthly
+    // product — it would bill monthly against a yearly promise.
+    annual: {
+      price: "299",
+      saving: "two months free",
+      checkoutUrl:
+        "https://checkout.dodopayments.com/buy/pdt_0Nn3cFe2dThkQVZV9ORxp?quantity=1",
+    },
     features: [
       "Unlimited podcasts",
       "Full transcript of every session",
       "9:16 shorts with editable captions",
       "AI blunder detection",
       "AI highlights sequence",
+      "Works fully offline, no internet needed",
       "Sessions are fully private and secured",
       "24/7 priority support",
     ],

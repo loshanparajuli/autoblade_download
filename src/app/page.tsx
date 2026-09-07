@@ -1,18 +1,22 @@
 import { AutobladeBetaBanner, AutobladeHeader } from "./AutobladeChrome";
 import { SiteFooter } from "./SiteFooter";
 import {
+  CONTACT_EMAIL,
   PARENT_SITE_URL,
   REQUIREMENTS,
   SITE_SUMMARY,
   SITE_URL,
 } from "./siteConfig";
 import { AutobladeAnimations } from "./AutobladeAnimations";
+import { SectionView } from "./AutobladeAnalytics";
 import { AutobladeDownload } from "./AutobladeDownload";
 import { AutobladeCarousel } from "./AutobladeCarousel";
 import { AutobladeLinkedInPost } from "./AutobladeLinkedInPost";
 import { AutobladeFaq } from "./AutobladeFaq";
 import { FAQS } from "./faqData";
 import { AutobladePlanCards } from "./AutobladePlans";
+import { AutobladeComparison } from "./AutobladeComparison";
+import { AutobladeTestimonials } from "./AutobladeSocialProof";
 import { PLANS } from "./plansData";
 import { REFUND_DAYS } from "./promo";
 import {
@@ -117,11 +121,25 @@ function AutobladeScreens() {
 
 // youtube-nocookie keeps the embed from setting tracking cookies before
 // anyone presses play.
-const DEMO_VIDEO_ID = "sAT4jcrmhXE";
+//
+// !! PLACEHOLDER !! The video currently embedded is the 57-minute unedited
+// run, standing in until the ~60s motion-graphics demo is cut. When it is
+// swapped, change all four fields below together. `duration` and `uploadDate`
+// that disagree with the real video are the usual reason Google ignores
+// VideoObject markup altogether, and wrong markup is worse than none.
+const DEMO_VIDEO = {
+  id: "sAT4jcrmhXE",
+  /** ISO 8601. PT1M30S for a 90-second cut. */
+  duration: "PT57M4S",
+  uploadDate: "2026-08-31T21:07:28-07:00",
+};
 
+// autoplay + loop + muted is right for a short demo and was wrong for the
+// 57-minute one: a minute-long motion graphic that restarts is an animated
+// diagram, whereas an hour of footage on a loop is just a tab burning battery.
 const DEMO_VIDEO_SRC =
-  `https://www.youtube-nocookie.com/embed/${DEMO_VIDEO_ID}` +
-  `?autoplay=1&mute=1&loop=1&playlist=${DEMO_VIDEO_ID}` +
+  `https://www.youtube-nocookie.com/embed/${DEMO_VIDEO.id}` +
+  `?autoplay=1&mute=1&loop=1&playlist=${DEMO_VIDEO.id}` +
   "&controls=1&rel=0&playsinline=1&modestbranding=1";
 
 function AutobladeDemo() {
@@ -132,8 +150,8 @@ function AutobladeDemo() {
         <h2>The walkthrough</h2>
       </div>
       <p className="ab-section-lede">
-        Three cameras in, one finished episode out. The whole thing, start to
-        finish, with nothing sped up that matters.
+        Three cameras in, one finished episode out. The whole job in about a
+        minute, which is roughly how long it takes for real.
       </p>
       <div className="ab-demo-frame">
         <iframe
@@ -192,17 +210,60 @@ function AutobladePricingBlock() {
   return (
     <section className="ab-pricing ab-pricing-inline" id="pricing">
       <div className="section-heading">
-        <p>USD · billed monthly</p>
+        {/* Pro AI now has a yearly option, so this can no longer say
+            "billed monthly" without contradicting the card below it. */}
+        <p>USD · monthly or yearly</p>
         <h2>What it costs</h2>
       </div>
-      <p className="ab-section-lede">
-        Two plans, no seat maths, no per-export fees. Pro caps out at 50
-        podcasts a month. <strong>Pro AI</strong> takes the cap off and puts
-        the AI engine on every cut.
-      </p>
+            {/* The anchor, and the section's whole argument: what this replaces costs
+          five to sixteen times what it costs.
+
+          It was two centred sentences, which is the wrong form for a
+          comparison — prose makes the reader assemble the contrast themselves
+          from two numbers buried mid-line. This is the same bordered,
+          hairline-divided figure row as .ab-hero-stats, deliberately: the page
+          already has a component for "here are the numbers that matter", and
+          reusing its vocabulary is what stops this reading as a one-off.
+
+          The left figure is grey and the right one carries the brand ramp, so
+          the comparison lands before a single word is read. */}
+      <dl className="ab-price-anchor">
+        <div className="ab-price-cell">
+          <dt>A freelance editor</dt>
+          <dd>
+            <span className="ab-price-figure">$150&ndash;500</span>
+            <span className="ab-price-unit">per episode</span>
+          </dd>
+        </div>
+        <div className="ab-price-cell is-us">
+          <dt>autoBlade Pro AI</dt>
+          <dd>
+            <span className="ab-price-figure">$29.99</span>
+            <span className="ab-price-unit">per month, as many as you make</span>
+          </dd>
+        </div>
+      </dl>
+
+      {/* The "no per-seat pricing / no per-minute caps / no export fees" line
+          that used to sit here is gone. Every claim in it is a row in the
+          comparison table below, stated there against the competitor it
+          answers, and the table's summary line says the same three things in
+          a sentence. Three copies of one idea in one section is two too many;
+          the table is the one that earns it, because only it shows the
+          alternative. */}
       <AutobladePlanCards />
+
+      {/* Below the cards, not above: someone who has already chosen should not
+          have to scroll past a rival's name to reach a checkout button. */}
+      <AutobladeComparison />
+
       <p className="ab-pricing-note">
-        Checkout is handled securely by Dodo Payments.
+        Buying for an agency, a network or a team?{" "}
+        <a href={`mailto:${CONTACT_EMAIL}?subject=autoBlade%20for%20teams`}>
+          Email {CONTACT_EMAIL}
+        </a>{" "}
+        and we will sort out volume pricing. Checkout is handled securely by
+        Dodo Payments.
       </p>
     </section>
   );
@@ -219,9 +280,10 @@ function AutobladeGet() {
       </div>
       <div className="ab-get-inner">
         <p className="ab-get-copy">
-          autoBlade is in beta and free to try. Leave your email, take the
-          build, and tell me what breaks. 1.0 lands fall 2026, and every paid
-          plan carries a {REFUND_DAYS}-day money-back guarantee.
+          autoBlade is in beta and free to try. Hundreds of hours of real
+          recordings have been through it already; you will still find rough
+          edges, and I want to hear about them. 1.0 lands fall 2026, and every
+          paid plan carries a {REFUND_DAYS}-day money-back guarantee.
         </p>
         <AutobladeDownload />
       </div>
@@ -286,11 +348,11 @@ const videoJsonLd = {
   name: "autoBlade walkthrough: three cameras in, one finished episode out",
   description:
     "A full walkthrough of autoBlade editing a multicam podcast: importing the host, guest and wide cameras, syncing them from audio, transcribing the session, and cutting automatically to whoever is speaking.",
-  thumbnailUrl: `https://i.ytimg.com/vi/${DEMO_VIDEO_ID}/maxresdefault.jpg`,
-  uploadDate: "2026-08-31T21:07:28-07:00",
-  duration: "PT57M4S",
-  embedUrl: `https://www.youtube-nocookie.com/embed/${DEMO_VIDEO_ID}`,
-  contentUrl: `https://www.youtube.com/watch?v=${DEMO_VIDEO_ID}`,
+  thumbnailUrl: `https://i.ytimg.com/vi/${DEMO_VIDEO.id}/maxresdefault.jpg`,
+  uploadDate: DEMO_VIDEO.uploadDate,
+  duration: DEMO_VIDEO.duration,
+  embedUrl: `https://www.youtube-nocookie.com/embed/${DEMO_VIDEO.id}`,
+  contentUrl: `https://www.youtube.com/watch?v=${DEMO_VIDEO.id}`,
   publisher: { "@id": `${PARENT_SITE_URL}/#organization` },
 };
 
@@ -378,12 +440,22 @@ export default function AutobladePage() {
         <AutobladeMarquee />
         <AutobladeScreens />
         <AutobladeFeatures />
-        <AutobladeDemo />
+        {/* Wrapped for the funnel: reached the demo -> reached the prices ->
+            clicked a checkout. Without these two the only measurable events
+            are at the very bottom of the page, which tells you nothing about
+            where people actually leave. */}
+        <SectionView event="demo_view">
+          <AutobladeDemo />
+        </SectionView>
+        {/* Renders nothing until socialProofData has real quotes in it. */}
+        <AutobladeTestimonials />
         {/* The offer band is the page's only copy-the-code surface, and it
             sits directly above the plan cards on purpose — you pick up the
             code on the way into checkout, not four screens earlier. */}
         <AutobladeOffer />
-        <AutobladePricingBlock />
+        <SectionView event="pricing_view">
+          <AutobladePricingBlock />
+        </SectionView>
         <AutobladePlatforms />
         <AutobladeStory />
         {/* Sits directly above the FAQ, whose heading reads "Before you

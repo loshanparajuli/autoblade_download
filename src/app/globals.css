@@ -1117,7 +1117,7 @@ img {
   border-color: #7fb3dc;
 }
 
-/* Labels here can run to a full phrase ("Get Pro · 7-day free trial"), which
+/* Labels here can run to a full phrase ("Get Pro AI · free trial"), which
    .dark-cta's nowrap and 27px side padding were never sized for. min-width: 0
    lets the button take the column's width instead of its own floor, and the
    tighter padding buys back the room the longer label needs. */
@@ -1130,6 +1130,465 @@ img {
 .ab-plan-featured .ab-plan-cta {
   background: #fff;
   color: var(--ink);
+}
+
+/* ---- price anchor ---- */
+/* Built on the same bordered, hairline-divided figure row as .ab-hero-stats.
+   It was two centred sentences, which is the wrong form for a comparison:
+   prose makes the reader assemble the contrast themselves out of two numbers
+   buried mid-line. The page already owns a component for "here are the numbers
+   that matter", and reusing its vocabulary is what stops this reading as a
+   one-off.
+
+   The h2 above is a fixed 75px box with a 51px line box, so its descenders sit
+   near its lower edge and this needs real air under it. */
+.ab-price-anchor {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 660px;
+  margin: 34px auto 0;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+
+/* A flex basis rather than a fixed width, so the pair splits evenly on a
+   desktop and stacks cleanly once there is no room for both. */
+.ab-price-cell {
+  flex: 1 1 260px;
+  padding: 26px 28px 24px;
+  border-right: 1px solid var(--line);
+  text-align: center;
+}
+
+.ab-price-cell:last-child {
+  border-right: 0;
+}
+
+.ab-price-cell dt {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.ab-price-cell.is-us dt {
+  color: var(--ink);
+}
+
+.ab-price-cell dd {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 13px 0 0;
+}
+
+/* Serif numerals, matching .ab-hero-stats dt and .ab-plan-amount.
+
+   Tracking is the whole job at this size. Instrument Serif sets loose by
+   default and a price is read as one object rather than as five separate
+   glyphs, so it is pulled tight enough to hold together and no tighter. The
+   value is in proportion with the other two places the face carries a figure:
+   -0.6px at 30px in the hero, -1.3px at 62px on the plan cards, -1.4px here at
+   46px. Change one, check the other two. */
+.ab-price-figure {
+  font-family: var(--serif);
+  font-size: 46px;
+  font-weight: 400;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -1.4px;
+  line-height: 1;
+}
+
+/* The cost being escaped: legible, and visibly inert. */
+.ab-price-cell:not(.is-us) .ab-price-figure {
+  color: var(--muted);
+}
+
+/* The cost being offered, in the brand ramp — the same treatment the hero's
+   numbers get, so the two rows read as one system. */
+.ab-price-cell.is-us .ab-price-figure {
+  background: var(--ab-grad-text);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.ab-price-unit {
+  color: var(--muted);
+  font-size: 11.5px;
+  letter-spacing: 0.3px;
+  line-height: 1.45;
+}
+
+/* ---- annual option ---- */
+/* Sits under the monthly figure as a quiet alternative, not a second headline.
+   The saving is the persuasive half, so it takes the accent while the price
+   itself stays a plain underlined link. */
+.ab-plan-annual {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: -8px 0 16px;
+  font-size: 13px;
+}
+
+.ab-plan-annual a {
+  border-bottom: 1px solid currentColor;
+  color: var(--muted);
+}
+
+.ab-plan-featured .ab-plan-annual a {
+  color: #c3ced8;
+}
+
+.ab-plan-annual a:hover {
+  color: var(--ink);
+}
+
+.ab-plan-featured .ab-plan-annual a:hover {
+  color: #fff;
+}
+
+.ab-plan-annual span {
+  padding: 3px 7px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.ab-plan-featured .ab-plan-annual span {
+  border-color: #7fb3dc;
+  color: #7fb3dc;
+}
+
+/* ---- comparison table ---- */
+/* Warm paper rather than the section's cool grey, so it reads as a considered
+   aside instead of another band of UI. */
+.ab-compare {
+  max-width: 900px;
+  margin: 52px auto 0;
+  padding: 34px 34px 30px;
+  border: 1px solid var(--line);
+  background: #fbfaf8;
+}
+
+.ab-compare-head {
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.ab-compare-title {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -0.6px;
+  line-height: 1.1;
+}
+
+.ab-compare-tldr {
+  max-width: 520px;
+  margin: 12px auto 0;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+/* Five columns of prose do not fit a phone. The table scrolls inside here so
+   the page body never does. */
+.ab-compare-scroll {
+  overflow-x: auto;
+  border: 1px solid #e6e2dc;
+  background: var(--bg);
+  -webkit-overflow-scrolling: touch;
+}
+
+.ab-compare-scroll:focus-visible {
+  outline: 2px solid var(--ab-g1);
+  outline-offset: 2px;
+}
+
+.ab-compare-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ab-compare-table th,
+.ab-compare-table td {
+  padding: 15px 18px;
+  /* Warmer and lighter than --line: at five rows the cool grey rules were the
+     loudest thing in the block. */
+  border-bottom: 1px solid #ece8e2;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.ab-compare-table tbody tr:last-child th,
+.ab-compare-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Column heads: the rivals' names, and ours. */
+.ab-compare-table thead th {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #d9d3ca;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Mark plus name, on one baseline. */
+.ab-compare-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ab-compare-logo {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+/* Neutral monogram for the rivals — deliberately not their logo. */
+.ab-compare-mark {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd7ce;
+  background: #fff;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+/* Row heads: the axis being compared. Muted, because the interesting content
+   is the cells, not the labels. */
+.ab-compare-table tbody th {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ab-compare-table td {
+  color: var(--ink);
+}
+
+/* Our column is tinted end to end so the eye can follow it down without
+   re-reading the header. One column, one accent — the rivals stay neutral,
+   which reads as a comparison rather than as a sales pitch. */
+.ab-compare-table .is-us {
+  background: rgb(27 108 168 / 5%);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.ab-compare-table thead .is-us {
+  border-bottom-color: var(--ab-accent);
+  color: var(--ab-accent);
+}
+
+.ab-compare-table thead .is-us .ab-compare-mark {
+  border-color: var(--ab-accent);
+  color: var(--ab-accent);
+}
+
+.ab-compare-note {
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ---- capabilities (autoBlade only, no competitor claims) ---- */
+.ab-capability {
+  margin: 30px 0 0;
+  padding-top: 26px;
+  border-top: 1px solid #e6e2dc;
+}
+
+.ab-capability-title {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ab-capability-grid {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px 26px;
+  list-style: none;
+}
+
+.ab-capability-grid li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+/* The same two-border checkmark the plan cards use, so the two lists read as
+   one family rather than as two different kinds of tick. */
+.ab-capability-grid li::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 3px;
+  width: 5px;
+  height: 9px;
+  border-right: 1.5px solid var(--ab-accent);
+  border-bottom: 1.5px solid var(--ab-accent);
+  transform: rotate(45deg);
+}
+
+/* ---- testimonials ---- */
+.ab-quotes {
+  padding: 62px 24px 72px;
+  border-top: 1px solid var(--line);
+}
+
+.ab-quote-grid {
+  display: grid;
+  max-width: 1060px;
+  margin: 44px auto 0;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.ab-quote {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 28px 26px 24px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.ab-quote blockquote {
+  flex: 1;
+  margin: 0 0 22px;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* Curly quotes drawn in, so the copy in the data file stays plain text. */
+.ab-quote blockquote::before {
+  content: open-quote;
+}
+
+.ab-quote blockquote::after {
+  content: close-quote;
+}
+
+.ab-quote figcaption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ab-quote-avatar {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.ab-quote-initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ab-grad);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.ab-quote-who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.35;
+}
+
+.ab-quote-who b {
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.ab-quote-who small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---- trusted by ---- */
+.ab-trusted {
+  max-width: 1060px;
+  margin: 44px auto 0;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.ab-trusted-label {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.ab-trusted-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 34px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ab-trusted-row li {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 22px;
+  letter-spacing: -0.4px;
+  opacity: 0.72;
 }
 
 .ab-pricing-note {
@@ -1168,6 +1627,64 @@ img {
   .ab-plan-amount {
     font-size: 54px;
   }
+
+  /* The cells stack, so the divider moves from the side to between them or
+     the lower cell floats with no edge under it. */
+  .ab-price-anchor {
+    margin-top: 24px;
+  }
+
+  .ab-price-cell {
+    flex: 1 1 100%;
+    padding: 22px 24px 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ab-price-cell:last-child {
+    border-bottom: 0;
+  }
+
+  .ab-price-figure {
+    font-size: 40px;
+    letter-spacing: -1.2px;
+  }
+
+
+  .ab-compare {
+    margin-top: 36px;
+    padding: 24px 20px 22px;
+  }
+
+  .ab-compare-head,
+  .ab-compare-note,
+  .ab-capability-title {
+    text-align: left;
+  }
+
+  .ab-compare-title {
+    font-size: 25px;
+  }
+
+  .ab-capability-grid {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .ab-quotes {
+    padding: 48px 24px 56px;
+  }
+
+  .ab-quote-grid {
+    margin-top: 32px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .ab-trusted-row li {
+    font-size: 19px;
+  }
+
 
   /* .dark-cta scales to 14px with 32px padding at this breakpoint, sized for
      "DOWNLOAD FOR MAC". Inside a plan card the available width has gone the
@@ -2249,15 +2766,55 @@ img {
   background: linear-gradient(180deg, #fff, #f7f9fb);
 }
 
+.ab-feature-head {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 15px;
+}
+
+/* A tinted plate under the mark. Bare 22px hairline glyphs sitting next to
+   15px text had no weight at all — they read as punctuation rather than as
+   the card's subject. The plate gives each cell one solid object to anchor on
+   without adding a colour the palette does not already have. */
+.ab-feature-plate {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  background: rgb(27 108 168 / 8%);
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.ab-feature:hover .ab-feature-plate {
+  background: rgb(27 108 168 / 14%);
+  transform: translateY(-2px);
+}
+
 .ab-feature-icon {
-  width: 26px;
-  height: 26px;
-  margin-bottom: 16px;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
   color: var(--ab-g1);
 }
 
+/* Resting state is the finished outline: dasharray 1 with no offset, which is
+   a full stroke. The scroll tween animates *from* an offset of 1 back to this,
+   so the icon draws itself once. Anyone on reduced motion, or with JS off,
+   sees the completed icon rather than an empty box — which is the whole reason
+   the finished state lives here and not in the tween. */
+.ab-feature-icon > *,
+.ab-feature-icon > * > * {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
 .ab-feature h3 {
-  margin: 0 0 10px;
+  margin: 0;
   color: var(--ink);
   font-size: 15px;
   font-weight: 600;
@@ -2265,11 +2822,26 @@ img {
   line-height: 1.35;
 }
 
-.ab-feature p {
+/* Two tones, so each card has something to land on. The lead is the line
+   worth reading; the copy is there for whoever wants the detail. Six cells of
+   uniform grey prose is what this replaced, and uniform grey is what made the
+   grid skimmable to nothing. */
+.ab-feature-lead {
+  margin: 0 0 7px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.ab-feature-copy {
   margin: 0;
   color: var(--muted);
   font-size: 13px;
   line-height: 1.65;
+  text-wrap: pretty;
 }
 
 /* ---------------- offer ---------------- */
@@ -3402,7 +3974,7 @@ img {
 }
 
 .ab-pricing-inline .ab-plans {
-  margin-top: 38px;
+  margin-top: 46px;
 }
 
 .ab-pricing-inline .ab-plan {
@@ -3413,15 +3985,10 @@ img {
   background: var(--ink);
 }
 
-.ab-pricing-inline .ab-section-lede strong {
-  color: var(--ink);
-  font-weight: 700;
-  letter-spacing: 0.6px;
-}
-
 .ab-pricing-note a {
   border-bottom: 1px solid currentColor;
   color: var(--ab-g1);
+  white-space: nowrap;
 }
 
 /* The badge wraps under the plan name on narrow cards rather than squeezing

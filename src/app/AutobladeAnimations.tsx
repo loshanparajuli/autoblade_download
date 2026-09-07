@@ -53,6 +53,23 @@ export function AutobladeAnimations() {
         },
       });
 
+      // Each icon draws its own outline as the grid arrives. Every shape has
+      // pathLength=1, so one offset value works for all of them regardless of
+      // geometry. It fires once and stops: this section sits above the fold on
+      // a laptop, and a looping animation here would be exactly the ambient
+      // motion the hero was cleared of.
+      gsap.from(".ab-feature-icon > *, .ab-feature-icon > * > *", {
+        strokeDashoffset: 1,
+        duration: 0.85,
+        stagger: 0.04,
+        ease: "power2.inOut",
+        scrollTrigger: {
+          trigger: ".ab-feature-grid",
+          start: "top 84%",
+          once: true,
+        },
+      });
+
       revealHeading(".ab-demo");
 
       gsap.from(".ab-demo-frame", {
@@ -68,7 +85,20 @@ export function AutobladeAnimations() {
       // file, which went with that route — without this the pricing block is
       // the one section on the page that never moves.
       revealHeading(".ab-pricing");
-      reveal(".ab-pricing .ab-section-lede", ".ab-pricing .ab-section-lede");
+
+      // The anchor's two cells come in after the heading, so the block reads
+      // top-down rather than all at once.
+      gsap.from(".ab-price-anchor > *", {
+        autoAlpha: 0,
+        y: 20,
+        stagger: 0.09,
+        duration: 0.66,
+        scrollTrigger: {
+          trigger: ".ab-price-anchor",
+          start: "top 88%",
+          once: true,
+        },
+      });
 
       gsap.from(".ab-plan", {
         autoAlpha: 0,

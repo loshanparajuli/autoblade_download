@@ -2,40 +2,45 @@ import { AppleMark } from "./AutobladeIcons";
 import { CouponChip } from "./AutobladeCoupon";
 import { FEATURES } from "./featuresData";
 import { AutobladeNotify } from "./AutobladeNotify";
-import { PROMO_PLAN, REFUND_DAYS } from "./promo";
+import { PROMO_LIMIT, PROMO_PLAN, REFUND_DAYS } from "./promo";
 
 /* Icons are inline, stroke-only and 24×24 on a shared grid, so the feature
-   grid stays one weight instead of a ransom note of mismatched glyphs. */
+   grid stays one weight instead of a ransom note of mismatched glyphs.
+
+   Every shape carries pathLength={1}. That normalises each outline to a length
+   of exactly 1 regardless of its real geometry, which is what lets one CSS
+   rule and one tween draw all of them at the same rate — without it a long
+   path and a short one drawn with the same dash values finish seconds apart. */
 const icon = {
   sync: (
-    <path d="M4 8h16M4 12h10M4 16h16M17 10l3 2-3 2" />
+    <path pathLength={1} d="M4 8h16M4 12h10M4 16h16M17 10l3 2-3 2" />
   ),
   wave: (
-    <path d="M3 12h2l2-6 3 13 3-10 2 5 2-3h4" />
+    <path pathLength={1} d="M3 12h2l2-6 3 13 3-10 2 5 2-3h4" />
   ),
   cut: (
     <>
-      <circle cx="6" cy="18" r="2.5" />
-      <circle cx="18" cy="18" r="2.5" />
-      <path d="M7.8 16.2 18 4M16.2 16.2 6 4" />
+      <circle pathLength={1} cx="6" cy="18" r="2.5" />
+      <circle pathLength={1} cx="18" cy="18" r="2.5" />
+      <path pathLength={1} d="M7.8 16.2 18 4M16.2 16.2 6 4" />
     </>
   ),
   shield: (
     <>
-      <path d="M12 3 5 6v6c0 4 3 7.2 7 9 4-1.8 7-5 7-9V6l-7-3Z" />
-      <path d="m9 12 2 2 4-4" />
+      <path pathLength={1} d="M12 3 5 6v6c0 4 3 7.2 7 9 4-1.8 7-5 7-9V6l-7-3Z" />
+      <path pathLength={1} d="m9 12 2 2 4-4" />
     </>
   ),
   vertical: (
     <>
-      <rect x="8" y="3" width="8" height="18" rx="1" />
-      <path d="M9.5 16h5" />
+      <rect pathLength={1} x="8" y="3" width="8" height="18" rx="1" />
+      <path pathLength={1} d="M9.5 16h5" />
     </>
   ),
   chip: (
     <>
-      <rect x="7" y="7" width="10" height="10" rx="1" />
-      <path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4" />
+      <rect pathLength={1} x="7" y="7" width="10" height="10" rx="1" />
+      <path pathLength={1} d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4" />
     </>
   ),
 };
@@ -73,9 +78,17 @@ export function AutobladeFeatures() {
       <div className="ab-feature-grid">
         {FEATURES.map((feature) => (
           <article className="ab-feature" key={feature.title}>
-            <Icon>{icon[feature.id]}</Icon>
-            <h3>{feature.title}</h3>
-            <p>{feature.copy}</p>
+            {/* Icon on the title's baseline rather than alone on a row above
+                it. Floating by itself the mark read as decoration and cost the
+                card a whole line of height; beside the heading it labels it. */}
+            <div className="ab-feature-head">
+              <span className="ab-feature-plate">
+                <Icon>{icon[feature.id]}</Icon>
+              </span>
+              <h3>{feature.title}</h3>
+            </div>
+            <p className="ab-feature-lead">{feature.lead}</p>
+            <p className="ab-feature-copy">{feature.copy}</p>
           </article>
         ))}
       </div>
@@ -188,14 +201,20 @@ export function AutobladeOffer() {
   return (
     <section className="ab-offer" id="offer">
       <div className="ab-offer-card">
-        <p className="ab-offer-eyebrow">Beta offer · while the beta runs</p>
+        <p className="ab-offer-eyebrow">
+          Beta offer · first {PROMO_LIMIT} customers
+        </p>
         <h2 className="ab-offer-title">
           {PROMO_PLAN} is <em>on the house</em>
         </h2>
+        {/* The cap is the reason to act today, so it is in the sentence rather
+            than in an eyebrow nobody reads. It is also a promise: 100 means
+            100, and the code has to come out of Dodo when they are gone. */}
         <p className="ab-offer-copy">
           Copy the code, paste it into the discount field at checkout, and{" "}
           {PROMO_PLAN}{" "}
-          comes to nothing for as long as the beta is open. Pro AI keeps the AI
+          comes to nothing. It is good for the first {PROMO_LIMIT} customers and
+          expires with the beta, whichever lands first. Pro AI keeps the AI
           engine on every cut, and keeps its price.
         </p>
         <div className="ab-offer-actions">
@@ -204,7 +223,7 @@ export function AutobladeOffer() {
         <ul className="ab-offer-points">
           <li>{REFUND_DAYS}-day money-back guarantee</li>
           <li>Cancel whenever you want</li>
-          <li>No card charged on {PROMO_PLAN} while the code is live</li>
+          <li>First {PROMO_LIMIT} customers only</li>
         </ul>
       </div>
     </section>
