@@ -122,25 +122,29 @@ function AutobladeScreens() {
 // youtube-nocookie keeps the embed from setting tracking cookies before
 // anyone presses play.
 //
-// !! PLACEHOLDER !! The video currently embedded is the 57-minute unedited
-// run, standing in until the ~60s motion-graphics demo is cut. When it is
-// swapped, change all four fields below together. `duration` and `uploadDate`
-// that disagree with the real video are the usual reason Google ignores
-// VideoObject markup altogether, and wrong markup is worse than none.
+// The 57-minute unedited run that used to sit here is gone; this is the real
+// ~45s walkthrough. `duration` and `uploadDate` are the true values read off
+// the upload, not estimates — a VideoObject whose duration disagrees with the
+// file is the usual reason Google drops the markup entirely. If the video is
+// ever recut, change all three fields together.
 const DEMO_VIDEO = {
-  id: "sAT4jcrmhXE",
-  /** ISO 8601. PT1M30S for a 90-second cut. */
-  duration: "PT57M4S",
-  uploadDate: "2026-08-31T21:07:28-07:00",
+  id: "I-i6A5sN-Pg",
+  /** ISO 8601. The upload reports 43 seconds. */
+  duration: "PT43S",
+  uploadDate: "2026-09-06T21:22:23-07:00",
 };
 
-// autoplay + loop + muted is right for a short demo and was wrong for the
-// 57-minute one: a minute-long motion graphic that restarts is an animated
-// diagram, whereas an hour of footage on a loop is just a tab burning battery.
+// Autoplay, muted, looping, no chrome. That combination was wrong for an
+// hour-long file and is right for a 43-second one: it reads as a moving
+// diagram of the product rather than as a video asking to be watched.
+//
+// controls=0 hides the bar. Keyboard control is deliberately NOT disabled
+// (no disablekb), so the embed can still be paused by anyone who tabs to it —
+// hiding the chrome should not mean taking the controls away entirely.
 const DEMO_VIDEO_SRC =
   `https://www.youtube-nocookie.com/embed/${DEMO_VIDEO.id}` +
   `?autoplay=1&mute=1&loop=1&playlist=${DEMO_VIDEO.id}` +
-  "&controls=1&rel=0&playsinline=1&modestbranding=1";
+  "&controls=0&rel=0&playsinline=1&modestbranding=1";
 
 function AutobladeDemo() {
   return (
@@ -150,14 +154,14 @@ function AutobladeDemo() {
         <h2>The walkthrough</h2>
       </div>
       <p className="ab-section-lede">
-        Three cameras in, one finished episode out. The whole job in about a
-        minute, which is roughly how long it takes for real.
+        Three cameras in, one finished episode out. Forty-three seconds, start
+        to finish.
       </p>
       <div className="ab-demo-frame">
         <iframe
           className="ab-demo-embed"
           src={DEMO_VIDEO_SRC}
-          title="autoBlade walkthrough video"
+          title="autoBlade quick walkthrough: three cameras synced, transcribed and cut automatically"
           loading="lazy"
           allow="autoplay; encrypted-media; picture-in-picture"
           allowFullScreen
@@ -345,9 +349,9 @@ const videoJsonLd = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
   "@id": `${SITE_URL}/#walkthrough-video`,
-  name: "autoBlade walkthrough: three cameras in, one finished episode out",
+  name: "autoBlade quick walkthrough: three cameras in, one finished episode out",
   description:
-    "A full walkthrough of autoBlade editing a multicam podcast: importing the host, guest and wide cameras, syncing them from audio, transcribing the session, and cutting automatically to whoever is speaking.",
+    "A short walkthrough of autoBlade editing a multicam podcast: importing the host, guest and wide cameras, syncing them from audio, transcribing the session, and cutting automatically to whoever is speaking.",
   thumbnailUrl: `https://i.ytimg.com/vi/${DEMO_VIDEO.id}/maxresdefault.jpg`,
   uploadDate: DEMO_VIDEO.uploadDate,
   duration: DEMO_VIDEO.duration,
